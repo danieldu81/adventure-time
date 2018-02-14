@@ -11,12 +11,12 @@ backpack = []
 
 def routes():
     print "There appears to be three routes that you can take."
-    decision = raw_input("Would you like to go to the room's computers, door, or cabinets? ")
-    if decision == "computers":
+    routeDecision = raw_input("Would you like to go to the room's A)computers B)door C)cabinets : ")
+    if routeDecision == "A":
         computers()
-    elif decision == "door":
+    elif routeDecision == "B":
         door()
-    elif decision == "cabinets":
+    elif routeDecision == "C":
         cabinets()
     else:
         print "That is not a valid option."
@@ -24,29 +24,29 @@ def routes():
     
 def computers():
     print "There seems to be a set of three computers in front of you."
-    decision = raw_input("Would you like to examine the computers? ")
-    if decision == "yes":
-        decision2 = raw_input("Which computer would you like to open (1/2/3)? ")
-        if decision2 == "1":
+    exComDecision = raw_input("Would you like to examine the computers A)Yes B)No : ")
+    if exComDecision == "A":
+        numComDecision = raw_input("Which computer would you like to open A)Computer 1 B)Computer 2 C)Computer 3 : ")
+        if numComDecision == "A":
             print "Computer 1 has been opened."
-            print "The computer looks very interesting."
+            print "Computer 1 looks very interesting, but it appears to be broken."
             computers()
-        elif decision2 == "2":
+        elif numComDecision == "B":
             print "Computer 2 has been opened."
-            print "The computer looks very interesting."
+            print "Computer 2 looks very interesting, but it appears to be broken."
             computers()
-        elif decision2 == "3":
+        elif numComDecision == "C":
             print "Computer 3 has been opened."
             if password == True and message == True:  
-                print "The computer looks very interesting."
+                print "Computer 3 looks very interesting."
                 computers()
             elif password == True and message == False:
                 SOS()
             else:
-                print "The computer screen seems to require a password."
+                print "Computer 3 seems to require a password."
                 while password == False:
-                    decision3 = raw_input("Enter a password. ")
-                    if decision3 == "ranch":
+                    passDecision = raw_input("Enter a password : ")
+                    if passDecision == "ranch":
                         print "That is the correct password."
                         print "Computer 3 has been accessed."
                         global password
@@ -58,7 +58,7 @@ def computers():
         else:
             print "That is not a valid option."
             computers()
-    elif decision == "no":
+    elif exComDecision == "B":
         print "You return to the beginning intersecton."
         routes()
     else:
@@ -71,15 +71,15 @@ def SOS():
     print "A keycard is needed to send an SOS message."
     if "keycard" in backpack:
         print "You seem to have a keycard in your backpack."
-        decision = raw_input("Would you like to use your keycard to send an SOS message to the ships? ")
-        if decision == "yes":
+        keycardDecision = raw_input("Would you like to use your keycard to send an SOS message to the ships A)Yes B)No : ")
+        if keycardDecision == "A":
             print "An SOS message has been sent."
             global message
             message = True
             print "The keycard has self-destructed."
             backpack.remove("keycard")
             computers()
-        elif decision == "no":
+        elif keycardDecision == "B":
             computers()
         else:
             print "That is not a valid option."
@@ -92,13 +92,16 @@ def door():
     if message == True and password == True:
         print "There seems to be slot in the door that requires a USB."
         if "USB" in backpack:
-            decision = raw_input("Would you like to use your USB to open the door? ")
-            if decision == "yes":
+            usbDecision = raw_input("Would you like to use your USB to open the door A)Yes B)No : ")
+            if usbDecision == "A":
                 print "You successfully open the door, which now leads to the next room."
                 print "You enter the next room."
-            else:
+            elif usbDecision == "B":
                 print "You return to the beginning intersecton."
                 routes()
+            else:
+                print "That is not a valid option."
+                door()
         else:
             print "You return to the beginning intersection."
             routes()
@@ -109,17 +112,17 @@ def door():
     
 def cabinets():
     print "There seems to be a set of three cabinets in front of you."
-    decision = raw_input("Would you like to examine the cabinets? ")
-    if decision == "yes":
-        decision2 = raw_input("Which cabinet would you like to open (1/2/3)? ")
-        if decision2 == "1":
+    cabDecision = raw_input("Would you like to examine the cabinets A)Yes B)No : ")
+    if cabDecision == "A":
+        cabNumDecision = raw_input("Which cabinet would you like to open A)Cabinet 1 B)Cabinet 2 C)Cabinet 3 : ")
+        if cabNumDecision == "A":
             if "CD" in backpack:
-                print "There is nothing in the cabinet."
+                print "There is nothing in Cabinet 1."
                 cabinets()
             else:
-                print "There seems to be a CD in the cabinet."
-                decision3 = raw_input("Would you like to put the CD into your backpack? ")
-                if decision3 == "yes":
+                print "There seems to be a CD in Cabinet 1."
+                cdDecision = raw_input("Would you like to put the CD into your backpack A)Yes B)No : ")
+                if cdDecision == "A":
                     if len(backpack) > 5:
                         print "Your backpack seems to be full."
                         cabinets()
@@ -127,16 +130,19 @@ def cabinets():
                         backpack.append("CD")
                         print "The CD has been added to your backpack."
                         cabinets()
-                else:
+                elif cdDecision == "B":
                     cabinets()
-        elif decision2 == "2":
+                else:
+                    print "That is not a valid option."
+                    cabinets()
+        elif cabNumDecision == "B":
             if "keycard" in backpack:
-                print "There is nothing in the cabinet."
+                print "There is nothing in Cabinet 2."
                 cabinets()
             else:
-                print "There seems to be a keycard in the cabinet."
-                decision3 = raw_input("Would you like to put the keycard into your backpack? ")
-                if decision3 == "yes":
+                print "There seems to be a keycard in Cabinet 2."
+                kcDecision = raw_input("Would you like to put the keycard into your backpack A)Yes B)No : ")
+                if kcDecision == "A":
                     if len(backpack) > 5:
                         print "Your backpack seems to be full."
                         cabinets()
@@ -144,16 +150,19 @@ def cabinets():
                         backpack.append("keycard")
                         print "The keycard has been added to your backpack."
                         cabinets()
-                else:
+                elif kcDecision == "B":
                     cabinets()
-        elif decision2 == "3":
+                else:
+                    print "That is not a valid option."
+                    cabinets()
+        elif cabNumDecision == "C":
             if "USB" in backpack:
-                print "There is nothing in the cabinet."
+                print "There is nothing in Cabinet 3."
                 cabinets()
             else:
-                print "There seems to be a USB in the cabinet."
-                decision3 = raw_input("Would you like to put the USB into your backpack? ")
-                if decision3 == "yes":
+                print "There seems to be a USB in Cabinet 3."
+                usbbDecision = raw_input("Would you like to put the USB into your backpack A)Yes B)No: ")
+                if usbbDecision == "A":
                     if len(backpack) > 5:
                         print "Your backpack seems to be full."
                         cabinets()
@@ -161,13 +170,19 @@ def cabinets():
                         backpack.append("USB")
                         print "The USB has been added to your backpack."
                         cabinets()
+                elif usbbDecision == "B":
+                        cabinets()
                 else:
+                    print "That is not a valid option."
                     cabinets()
         else:
             print "That is not a valid option."
             cabinets()
-    else:
+    elif cabDecision == "B":
         print "You return to the beginning intersection."
         routes()
+    else:
+        print "That is not a valid option."
+        cabinets()
         
 routes()
