@@ -14,31 +14,39 @@ def routes():
     print "There appears to be three routes that you can take."
     decision = raw_input("Would you like to go to the ship's control, door, or cabinets? ")
     if decision == "control":
-        control();
+        control()
     elif decision == "door":
-        door();
+        door()
     elif decision == "cabinets":
-        cabinets();
+        cabinets()
     else:
         print "That is not a valid option."
         routes()
     
 def control():
+    print computer
     print "There seems to be a computer and the ship's engine in front of you."
     decision = raw_input("Would you like to check the computer and engine out? ")
     if decision == "yes":
         decision2 = raw_input("Which one would you like to access first? ")
         if decision2 == "computer":
-            print "The computer screen seems to require a password."
-            while password == False:
-                decision3 = raw_input("Enter a password. ")
-                if decision3 == "ketchup":
-                    print "That is the correct password."
-                    print "The computer's error has been fixed."
-                    password = True
-                    computer = True
-                else:
-                    print "Sorry, that is incorrect."
+            print "The computer has been accessed."
+            if computer == True:  
+                print "The computer looks very interesting."
+                control()
+            else:
+                print "The computer screen seems to require a password."
+                while password == False:
+                    decision3 = raw_input("Enter a password. ")
+                    if decision3 == "ketchup":
+                        print "That is the correct password."
+                        print "The computer's error has been fixed."
+                        password = True
+                        computer = True
+                        control()
+                    else:
+                        print "Sorry, that is incorrect."
+                        control()
         elif decision2 == "engine":
             print "The engine seems to have a malfunction and requires a welder to fix it."
             if "welder" in backpack:
@@ -46,7 +54,7 @@ def control():
                 decision3 = raw_input("Would you like to use it on the engine? ")
                 if decision3 == "yes":
                     print "The ship's engine has been fixed."
-                    engine = True
+                    engine == True
                 else:
                     control()
             else:
