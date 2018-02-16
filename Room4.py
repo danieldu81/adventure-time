@@ -12,6 +12,20 @@ backpack = []
 def routes():
     print "There appears to be three routes that you can take."
     routeDecision = raw_input("Would you like to go to the room's A)computers B)door C)cabinets : ")
+    print "                            .______                          "
+    print "                            |   _  \                         "
+    print "                            |  |_)  |                        "
+    print "                            |   _  <                         "
+    print "                            |  |_)  |                        "
+    print "                            |______/                         "
+    print "                               /\                            "
+    print "                              /  \                           "
+    print "     ___         ___         / __ \        ___        ______ "
+    print "    /   \       /  /        / |  | \       \  \      /      |"
+    print "   /  ^  \     /  / ______    |  |     _____\  \    |  ,----'"
+    print "  /  /_\  \   <  < |______|   |  |    |______>  >   |  |     "
+    print " /  _____  \   \  \           |  |          /  /    |  `----."
+    print "/__/     \__\   \__\          |__|         /__/      \______|"
     if routeDecision == "A":
         computers()
     elif routeDecision == "B":
@@ -24,31 +38,103 @@ def routes():
     
 def computers():
     print "There seems to be a set of three computers in front of you."
+    print "   _______________       _______________       _______________   " 
+    print "  |  ___________  |     |  ___________  |     |  ___________  |  "
+    print "  | |           | |     | |           | |     | |           | |  "
+    print "  | |           | |     | |           | |     | |           | |  "   
+    print "  | |     1     | |     | |     2     | |     | |     3     | |  "    
+    print "  | |           | |     | |           | |     | |           | |  "  
+    print "  | |___     ___| |     | |___     ___| |     | |___     ___| |  "  
+    print "  |_____|\_/|_____|     |_____|\_/|_____|     |_____|\_/|_____|  "  
+    print "    _|__|/ \|__|_         _|__|/ \|__|_         _|__|/ \|__|_    "
+    print "   / *********** \       / *********** \       / *********** \   "     
+    print " /  *************  \   /  *************  \   /  *************  \ "    
+    print "--------------------- --------------------- ---------------------" 
     exComDecision = raw_input("Would you like to examine the computers A)Yes B)No : ")
     if exComDecision == "A":
         numComDecision = raw_input("Which computer would you like to open A)Computer 1 B)Computer 2 C)Computer 3 : ")
         if numComDecision == "A":
             print "Computer 1 has been opened."
             print "Computer 1 looks very interesting, but it appears to be broken."
+            print "   _______________   " 
+            print "  |  ___________  |  "
+            print "  | |           | |  "
+            print "  | |           | |  "   
+            print "  | |   BROKEN  | |  "    
+            print "  | |           | |  "  
+            print "  | |___     ___| |  "  
+            print "  |_____|\_/|_____|  "  
+            print "    _|__|/ \|__|_    "
+            print "   / *********** \   "     
+            print " /  *************  \ "    
+            print "---------------------"
             computers()
         elif numComDecision == "B":
             print "Computer 2 has been opened."
             print "Computer 2 looks very interesting, but it appears to be broken."
+            print "   _______________   " 
+            print "  |  ___________  |  "
+            print "  | |           | |  "
+            print "  | |           | |  "   
+            print "  | |   BROKEN  | |  "    
+            print "  | |           | |  "  
+            print "  | |___     ___| |  "  
+            print "  |_____|\_/|_____|  "  
+            print "    _|__|/ \|__|_    "
+            print "   / *********** \   "     
+            print " /  *************  \ "    
+            print "---------------------"
             computers()
         elif numComDecision == "C":
             print "Computer 3 has been opened."
             if password == True and message == True:  
                 print "Computer 3 looks very interesting."
+                print "   _______________   " 
+                print "  |  ___________  |  "
+                print "  | |           | |  "
+                print "  | |           | |  "   
+                print "  | |           | |  "    
+                print "  | |           | |  "  
+                print "  | |___     ___| |  "  
+                print "  |_____|\_/|_____|  "  
+                print "    _|__|/ \|__|_    "
+                print "   / *********** \   "     
+                print " /  *************  \ "    
+                print "---------------------"
                 computers()
             elif password == True and message == False:
                 SOS()
             else:
                 print "Computer 3 seems to require a password."
+                print "   _______________   " 
+                print "  |  ___________  |  "
+                print "  | |           | |  "
+                print "  | |           | |  "   
+                print "  | |  PASSWORD | |  "    
+                print "  | |           | |  "  
+                print "  | |___     ___| |  "  
+                print "  |_____|\_/|_____|  "  
+                print "    _|__|/ \|__|_    "
+                print "   / *********** \   "     
+                print " /  *************  \ "    
+                print "---------------------"
                 while password == False:
                     passDecision = raw_input("Enter a password : ")
                     if passDecision == "ranch":
                         print "That is the correct password."
                         print "Computer 3 has been accessed."
+                        print "   _______________   " 
+                        print "  |  ___________  |  "
+                        print "  | |           | |  "
+                        print "  | |           | |  "   
+                        print "  | |  ACCESSED | |  "    
+                        print "  | |           | |  "  
+                        print "  | |___     ___| |  "  
+                        print "  |_____|\_/|_____|  "  
+                        print "    _|__|/ \|__|_    "
+                        print "   / *********** \   "     
+                        print " /  *************  \ "    
+                        print "---------------------"
                         global password
                         password = True
                         SOS()
@@ -71,9 +157,19 @@ def SOS():
     print "A keycard is needed to send an SOS message."
     if "keycard" in backpack:
         print "You seem to have a keycard in your backpack."
+        print " _____ "
+        print "|\ ~ /|"
+        print "|}}:{{|"
+        print "|}}:{{|"
+        print "|}}:{{|"
+        print "|/_~_\|"
         keycardDecision = raw_input("Would you like to use your keycard to send an SOS message to the ships A)Yes B)No : ")
         if keycardDecision == "A":
             print "An SOS message has been sent."
+            print " ___  ___  ___  "
+            print "/ __|/ _ \/ __| "
+            print "\__ \ (_) \__ \ "
+            print "|___/\___/|___/ "
             global message
             message = True
             print "The keycard has self-destructed."
@@ -89,12 +185,45 @@ def SOS():
     
 def door():
     print "The door to the next room lies in front of you."
+    print "   ______________   "
+    print "  |\ ___________ /| "
+    print "  | |  _ _ _ _  | | "
+    print "  | | | | | | | | | "
+    print "  | | |-+-+-+-| | | "
+    print "  | | |-+-+=+%| | | "
+    print "  | | |_|_|_|_| | | "
+    print "  | |    ___    | | "
+    print "  | |   [___] ()| | "
+    print "  | |         ||| | "
+    print "  | |         ()| | "
+    print "  | |           | | "
+    print "  | |           | | "
+    print "  | |           | | "
+    print "  |_|___________|_| "
     if message == True and password == True:
         print "There seems to be slot in the door that requires a USB."
+        print "   _   ,--()"
+        print "  ( )-'-.------|>"
+        print "   -     `--[]"
         if "USB" in backpack:
             usbDecision = raw_input("Would you like to use your USB to open the door A)Yes B)No : ")
             if usbDecision == "A":
                 print "You successfully open the door, which now leads to the next room."
+                print "   ______________   "
+                print "  |\ ___________ /| "
+                print "  | |  /|,| |   | | "
+                print "  | | |,x,| |   | | "
+                print "  | | |,x,' |   | | "
+                print "  | | |,x   ,   | | "
+                print "  | | |/    |%==| | "
+                print "  | |    /] ,   | | "
+                print "  | |   [/ ()   | | "
+                print "  | |       |   | | "
+                print "  | |       |   | | "
+                print "  | |       |   | | "
+                print "  | |      ,'   | | "
+                print "  | |   ,'      | | "
+                print "  |_|,'_________|_| "
                 print "You enter the next room."
             elif usbDecision == "B":
                 print "You return to the beginning intersecton."
@@ -112,6 +241,15 @@ def door():
     
 def cabinets():
     print "There seems to be a set of three cabinets in front of you."
+    print "   __________    __________    __________  "
+    print "  |  __  __  |  |  __  __  |  |  __  __  | "
+    print "  | |  ||  | |  | |  ||  | |  | |  ||  | | "
+    print "  | |__||__| |  | |__||__| |  | |__||__| | "
+    print "  |  __  __(1)  |  __  __(2)  |  __  __(3) "
+    print "  | |  ||  | |  | |  ||  | |  | |  ||  | | "
+    print "  | |  ||  | |  | |  ||  | |  | |  ||  | | "
+    print "  | |__||__| |  | |__||__| |  | |__||__| | "
+    print "  |__________|  |__________|  |__________| " 
     cabDecision = raw_input("Would you like to examine the cabinets A)Yes B)No : ")
     if cabDecision == "A":
         cabNumDecision = raw_input("Which cabinet would you like to open A)Cabinet 1 B)Cabinet 2 C)Cabinet 3 : ")
@@ -121,6 +259,13 @@ def cabinets():
                 cabinets()
             else:
                 print "There seems to be a CD in Cabinet 1."
+                print " _________"
+                print "|^|     | |"
+                print "| |_____| |"
+                print "|  _____  |"
+                print "| |     | |"
+                print "| |_____| |"
+                print "|_|_____|_|"       
                 cdDecision = raw_input("Would you like to put the CD into your backpack A)Yes B)No : ")
                 if cdDecision == "A":
                     if len(backpack) > 5:
@@ -141,6 +286,12 @@ def cabinets():
                 cabinets()
             else:
                 print "There seems to be a keycard in Cabinet 2."
+                print " _____ "
+                print "|\ ~ /|"
+                print "|}}:{{|"
+                print "|}}:{{|"
+                print "|}}:{{|"
+                print "|/_~_\|"
                 kcDecision = raw_input("Would you like to put the keycard into your backpack A)Yes B)No : ")
                 if kcDecision == "A":
                     if len(backpack) > 5:
@@ -161,6 +312,9 @@ def cabinets():
                 cabinets()
             else:
                 print "There seems to be a USB in Cabinet 3."
+                print "   _   ,--()"
+                print "  ( )-'-.------|>"
+                print "   -     `--[]"
                 usbbDecision = raw_input("Would you like to put the USB into your backpack A)Yes B)No: ")
                 if usbbDecision == "A":
                     if len(backpack) > 5:
