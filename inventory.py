@@ -2,13 +2,13 @@
 class Item:
     # class-wide restrictions on inventory items
     MAX_N_LEN = 16
-    
+
     def __init__(self, name, description='an item', weight=1):
         # constructor populates data fields
         self.name = name
         self.description = description
         self.weight = weight
-        
+
     def as_tuple(self):
         # returns this item as a tuple
         return (self.name, self.weight, self.description)
@@ -18,18 +18,33 @@ NULL = Item('NULL', 'empty', -1)
 
 # the user inventory
 class Inventory:
-    def __init__(self):
+    def __init__(self, max_len=-1, max_weight=-1):
         # constuctor initializes an empty list
+        # optionally, if max_len or max_weight are positive, they form upper
+        # bounds on the size of the inventory
         self.items = []
-        
+        self.max_len = max_len
+        self.max_weight = max_weight
+
     def pick_item(self, item):
-        # accepts the item object to append, but we cannot append NULL
+        # accepts the Item object to append, but we cannot append invalid Items
         # return 1 on success and -1 on failure
+        if self.max_len > 0 and len(self.items) >= self.max_len:
+            # reject if max_len is set and we have reached it
+            return -1
+        if (self.max_weight > 0 and
+            sum([item.weight for item in self.items]) >= self.max_weight):
+            # reject if max_weight is set and we have reached it
+            return -1
         if item.weight <= 0:
+            # reject if NULL or invalid weight
+            return -1
+        if len(item.name) > Item.MAX_N_LEN:
+            # reject if name too long
             return -1
         self.items += [item]
         return 1
-        
+
     def drop_item(self, index):
         # returns the item removed
         # if no object was removed, return the NULL object
@@ -40,13 +55,13 @@ class Inventory:
             return tmp
         except:
             return NULL
-            
+
     def as_tuple(self):
         # returns the inventory items as a tuple
         return tuple(self.items)
-        
+
     def print_inv(self):
-        # prints inventory 
+        # prints inventory
         # returns the number of items printed
         print 'index :             name : weight : ( description )'
         print '==================================='
