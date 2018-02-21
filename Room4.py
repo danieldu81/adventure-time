@@ -1,7 +1,5 @@
-import hashlib
-
 #room 4 introduction and directions
-print "Welcome to room 4!\n"
+print "\nWelcome to room 4!\n"
 print "===================================================================================================="
 print "You have entered the command center."
 print "You are surrounded by many computers which are not functioning. To access the terminal, type in the"
@@ -9,11 +7,26 @@ print "correct password into the matching computer. Then, send an SOS to nearby 
 print "===================================================================================================="
 print "\nYou can get help with the \'?\' command. Good luck!"
 
+import hashlib
+import inventory
+
 passwords = "ketchup, mustard, ranch" #possible passwords for room
 message = False #variable to keep track of state of engine
 password = False #variable to keep track of state of computer password
-backpack = [] #list to keep track of state of backpack
+inv = inventory.Inventory() #generate a user inventory
 cmd = '' #variable to keep track of user's commands
+
+cabinet1 = inventory.Inventory()
+cabinet2 = inventory.Inventory()
+cabinet3 = inventory.Inventory()
+
+CD = inventory.Item('CD', description='a very sharp discus', weight=2)
+keycard = inventory.Item('keycard', description='a panacea to your issues', weight=1)
+USB = inventory.Item('USB', description='a wicked device', weight=1)
+
+cabinet1.pick_item(CD)
+cabinet2.pick_item(keycard)
+cabinet3.pick_item(USB)
    
 #function to access computer 1 
 def computer1():
@@ -112,14 +125,14 @@ def SOS():
     else: 
         print "The ship's communication line with nearby ships has been opened."
         print "A keycard is needed to send an SOS message."
-        if "keycard" in backpack: #if user has keycard in backpack, prompt to use the keycard to send SOS message
+        if "keycard" in [item.name for item in inv.as_tuple()]: #if user has keycard in inventory, prompt to use the keycard to send SOS message
             print " _____ "
             print "|\ ~ /|"
             print "|}}:{{|"
             print "|}}:{{|"
             print "|}}:{{|"
             print "|/_~_\|"
-            print "You seem to have a keycard in your backpack."
+            print "You seem to have a keycard in your inventory."
             keycardDecision = raw_input("Would you like to use your keycard to send an SOS message to the ships A)Yes B)No : ")
             if keycardDecision.upper() == "A" or keycardDecision.upper() == "YES":
                 print " ___  ___  ___  " #send SOS message if user agrees to use keycard
@@ -128,8 +141,6 @@ def SOS():
                 print "|___/\___/|___/ "
                 print "An SOS message has been sent."
                 message = True
-                print "The keycard has self-destructed."
-                backpack.remove("keycard") #remove keycard from backpack once used
 
 #function to access door to next room    
 def door():
@@ -152,7 +163,7 @@ def door():
         print "| |           | | "
         print "|_|___________|_| "
         print "There seems to be slot in the door that requires a USB."
-        if "USB" in backpack: #if user has USB in backpack, prompt to use USB to open door
+        if "USB" in [item.name for item in inv.as_tuple()]: #if user has USB in inventory, prompt to use USB to open door
             print " _   ,--()"
             print "( )-'-.------|>"
             print " -     `--[]"
@@ -164,7 +175,7 @@ def door():
                 print "| | |,x,| |   | | "
                 print "| | |,x,' |   | | "
                 print "| | |,x   ,   | | "
-                print "| | |/    |%==| | "
+                print "| | |/    |   | | "
                 print "| |    /] ,   | | "
                 print "| |   [/ ()   | | "
                 print "| |       |   | | "
@@ -177,11 +188,49 @@ def door():
                 print "You enter the next room." #if user agrees to use USB, open door and exit program
                 global cmd
                 cmd = 'quit' #set cmd to quit to exit program
+                
+def show_cabinet_1(h=False, f=None):
+    if h:
+        print 'Help entry for: '+f
+        print '      show the items currently visible in Cabinet 1'
+        return
+    if len(cabinet1.as_tuple()) < 1:
+        print 'Cabinet 1 is empty and void'
+        return -1
+    print '\nCurrent items visible in Cabinet 1:'
+    return cabinet1.print_inv()    
+    
+def show_cabinet_2(h=False, f=None):
+    if h:
+        print 'Help entry for: '+f
+        print '      show the items currently visible in Cabinet 2'
+        return
+    if len(cabinet2.as_tuple()) < 1:
+        print 'Cabinet 2 is empty and void'
+        return -1
+    print '\nCurrent items visible in Cabinet 2:'
+    return cabinet2.print_inv()    
+    
+def show_cabinet_3(h=False, f=None):
+    if h:
+        print 'Help entry for: '+f
+        print '      show the items currently visible in Cabinet 3'
+        return
+    if len(cabinet3.as_tuple()) < 1:
+        print 'Cabinet 3 is empty and void'
+        return -1
+    print '\nCurrent items visible in Cabinet 3:'
+    return cabinet3.print_inv() 
 
 #function to access cabinet 1                
-def cabinet1():
-    if "CD" in backpack:
-        print "There is nothing in Cabinet 1." #if CD is already in backpack, say cabinet 1 is empty
+def cabinet_1(h=False, f=None):
+    if h:
+        print 'Help entry for: '+f
+        print '      show the items currently visible in Cabinet 1'
+        return
+    if "CD" in [item.name for item in inv.as_tuple()]:
+        print "There is nothing in Cabinet 1." #if welder is already in inv, say cabinet 1 is empty
+        return -1
     else:
         print " _________"
         print "|^|     | |"
@@ -191,18 +240,29 @@ def cabinet1():
         print "| |_____| |"
         print "|_|_____|_|"
         print "There seems to be a CD in Cabinet 1."       
-        cdDecision = raw_input("Would you like to put the CD into your backpack A)Yes B)No : ") #prompt user to put CD into backpack
+        cdDecision = raw_input("Would you like to put the CD into your inventory A)Yes B)No : ") #prompt user to put CD into inventory
         if cdDecision.upper() == "A" or cdDecision.upper() == "YES":
-            if len(backpack) > 5:
-                print "Your backpack seems to be full." #if backpack has 5 items, do not put CD into backpack
+            if len(inv.as_tuple()) > 5:
+                print "Your inventory seems to be full." #if inv has 5 items, do not put welder into inv
             else:
-                backpack.append("CD")
-                print "The CD has been added to your backpack." #otherwise add CD into backpack
+                try:
+                    show_cabinet_1()
+                    index = int(raw_input('room 4 : pick up at [room] index => '))
+                    tmp = cabinet1.drop_item(index)
+                    assert tmp != inventory.NULL
+                    assert inv.pick_item(tmp) > 0
+                except:
+                     err('inventory error (invalid item to pick up)')
 
 #function to access cabinet 2    
-def cabinet2():
-    if "keycard" in backpack or message == True:
-        print "There is nothing in Cabinet 2." #if keycard is already in backpack or SOS message has already been sent, say cabinet 2 is empty
+def cabinet_2(h=False, f=None):
+    if h:
+        print 'Help entry for: '+f
+        print '      show the items currently visible in Cabinet 2'
+        return
+    if "keycard" in [item.name for item in inv.as_tuple()]:
+        print "There is nothing in Cabinet 2." #if welder is already in inv, say cabinet 2 is empty
+        return -1
     else:
         print " _____ "
         print "|\ ~ /|"
@@ -211,60 +271,79 @@ def cabinet2():
         print "|}}:{{|"
         print "|/_~_\|"
         print "There seems to be a keycard in Cabinet 2."
-        kcDecision = raw_input("Would you like to put the keycard into your backpack A)Yes B)No : ") #prompt user to put keycard into backpack
+        kcDecision = raw_input("Would you like to put the keycard into your inventory A)Yes B)No : ") #prompt user to put keycard into inventory
         if kcDecision.upper() == "A" or kcDecision.upper() == "YES":
-            if len(backpack) > 5:
-                print "Your backpack seems to be full." #if backpack has 5 items, do not put keycard into backpack
+            if len(inv.as_tuple()) > 5:
+                print "Your inv seems to be full." #if inv has 5 items, do not put hammer into inv
             else:
-                backpack.append("keycard")
-                print "The keycard has been added to your backpack." #otherwise add keycard into backpack
+                try:
+                    show_cabinet_2()
+                    index = int(raw_input('room 4 : pick up at [room] index => '))
+                    tmp = cabinet2.drop_item(index)
+                    assert tmp != inventory.NULL
+                    assert inv.pick_item(tmp) > 0
+                except:
+                     err('inventory error (invalid item to pick up)')
 
 #function to access cabinet 3    
-def cabinet3():
-    if "USB" in backpack:
-        print "There is nothing in Cabinet 3." #if USB is already in backpack, say cabinet 3 is empty
+def cabinet_3(h=False, f=None):
+    if h:
+        print 'Help entry for: '+f
+        print '      show the items currently visible in Cabinet 3'
+        return
+    if "USB" in [item.name for item in inv.as_tuple()]:
+        print "There is nothing in Cabinet 3." #if welder is already in inv, say cabinet 3 is empty
+        return -1
     else:
         print " _   ,--()"
         print "( )-'-.------|>"
         print " -     `--[]"
         print "There seems to be a USB in Cabinet 3."
-        usbbDecision = raw_input("Would you like to put the USB into your backpack A)Yes B)No : ") #prompt user to put USB into backpack
+        usbbDecision = raw_input("Would you like to put the USB into your inventory A)Yes B)No : ") #prompt user to put USB into inventory
         if usbbDecision.upper() == "A" or usbbDecision.upper() == "YES":
-            if len(backpack) > 5:
-                print "Your backpack seems to be full." #if backpack has 5 items, do not put USB into backpack
+            if len(inv.as_tuple()) > 5:
+                print "Your inv seems to be full." #if inv has 5 items, do not put hammer into inv
             else:
-                backpack.append("USB")
-                print "The USB has been added to your backpack." #otherwise add USB into backpack
+                try:
+                    show_cabinet_3()
+                    index = int(raw_input('room 4 : pick up at [room] index => '))
+                    tmp = cabinet3.drop_item(index)
+                    assert tmp != inventory.NULL
+                    assert inv.pick_item(tmp) > 0
+                except:
+                     err('inventory error (invalid item to pick up)')
 
-#function to display contents of user backpack
-def showBackpack(h=False, f=None):
+#function to display contents of user inv
+def showInv(h=False, f=None):
     if h:
         print 'Help entry for: '+f
-        print '      show your current backpack'
+        print '      show your current inventory'
         return
-    if len(backpack) < 1: #if nothing in backpack, display appropriate message
-        print 'your backpack is empty'
+    if len(inv.as_tuple()) < 1: #if nothing in inv, display appropriate message
+        print 'your inventory is empty'
         return -1
-    print '\nCurrent state of your backpack:' #display all contents in backpack with quantities (1)
-    for item in backpack:
-        print "1 " + item
-    return
+    print '\nCurrent state of your inventory:' #display all contents in inv with quantities (1)
+    return inv.print_inv()
 
-#function to drop items from user backpack
+#function to drop items from user inv
 def dropItem(h=False, f=None):
     if h:
         print 'Help entry for: '+f
-        print '      interactively drop an item from your backpack'
+        print '      interactively drop an item from your inventory'
         return
-    if len(backpack) < 1: #if nothing in backpack, display appropriate message
+    if len(inv.as_tuple()) < 1: #if nothing in inv, display appropriate message
         err('no items to drop')
         return
     try:
-        showBackpack()  #display contents of backpack
-        item = raw_input('room 4 : drop item => ') #remove item that user enters
-        backpack.remove(item)
+        showInv()  #display contents of inv
+        index = int(raw_input('room 4 : drop at [inventory] index => '))
+        tmp = inv.drop_item(index)
+        assert tmp != inventory.NULL
+        assert cabinet1.pick_item(tmp) > 0
+        assert cabinet2.pick_item(tmp) > 0
+        assert cabinet3.pick_item(tmp) > 0
     except:
-        err('backpack error (invalid item to drop)') #show error message if entry does not match any backpack item
+        err('inv error (invalid item to drop)') #show error message if entry does not match any inv item
 
 #function to display format of all errors
 def err(text):
@@ -292,12 +371,11 @@ def help(h=False, f=None):
     print 'Available commands:' #print each command in userDictionary for user to use
     for key in userDictionary:
         print '  '+key
-    print 'you can get contextual help with <cmd>?'
         
 #dictionary containing commands and respective function calls         
 userDictionary = {'?': help, 'quit': bye, 'computer 1': computer1, 'computer 2': computer2, 'computer 3': computer3,
-                'door': door, 'cabinet 1': cabinet1, 'cabinet 2': cabinet2, 'cabinet 3': cabinet3,
-                'send sos': SOS, 'show backpack': showBackpack, 'drop item': dropItem}
+                'door': door, 'cabinet 1': cabinet_1, 'cabinet 2': cabinet_2, 'cabinet 3': cabinet_3,
+                'send sos': SOS, 'show inv': showInv, 'drop item': dropItem}
         
 #user input prompt/commands
 while cmd not in ['quit']:
