@@ -156,14 +156,6 @@ def wrap_inv_pick(h=False, f=None):
     except:
         err('inventory error (invalid item to pick up)')
 
-# greet user and explain predicament
-print 'Welcome to room 5!\n'
-print ('In this room is a formidable problem: a complex Atwood\'s machine that'
-        ' requires five weights to be correctly used to put the system in '
-        'equilibrium. Assume that the downward acceleration on this space '
-        'station just so happens to be 10 m/s^2.')
-print '\nYou can get help with the \'?\' command. Good luck!'
-
 # other functions
 def show_machine(h=False, f=None):
     # show the machine state to the user
@@ -246,15 +238,27 @@ usr_dict = {
     'solve machine': solve_machine
 }
 
-# user input prompt
-cmd = ''
-while cmd not in ['quit', 'leave', 'exit', 'q', 'X']:
-    cmd = raw_input('room 5 => ').strip()
-    try:
-        usr_dict[cmd]()  # see if the command is in the dict
-    except:
+def play():
+    # greet user and explain predicament
+    print 'Welcome to room 5!\n'
+    print ('In this room is a formidable problem: a complex Atwood\'s machine '
+        ' that requires five weights to be correctly used to put the system in '
+        'equilibrium. Assume that the downward acceleration on this space '
+        'station just so happens to be 10 m/s^2.')
+    print '\nYou can get help with the \'?\' command. Good luck!'
+    
+    # user input prompt
+    cmd = ''
+    while cmd not in ['quit', 'leave', 'exit', 'q', 'X']:
+        cmd = raw_input('room 5 => ').strip()
         try:
-            assert cmd[-1] == '?'  # see if command is <func>?
-            usr_dict[cmd[:-1]](h=True, f=cmd[:-1])
+            usr_dict[cmd]()  # see if the command is in the dict
         except:
-            err('unrecognized input. try \'?\' for help')
+            try:
+                assert cmd[-1] == '?'  # see if command is <func>?
+                usr_dict[cmd[:-1]](h=True, f=cmd[:-1])
+            except:
+                err('unrecognized input. try \'?\' for help')
+
+if __name__ == '__main__':
+    play()
