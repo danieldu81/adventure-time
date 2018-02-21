@@ -16,17 +16,17 @@ password = False #variable to keep track of state of computer password
 inv = inventory.Inventory() #generate a user inventory
 cmd = '' #variable to keep track of user's commands
 
-cabinet1 = inventory.Inventory()
-cabinet2 = inventory.Inventory()
-cabinet3 = inventory.Inventory()
+cabinet1 = inventory.Inventory() #create inventory for cabinet 1
+cabinet2 = inventory.Inventory() #create inventory for cabinet 2
+cabinet3 = inventory.Inventory() #create inventory for cabinet 3
 
-CD = inventory.Item('CD', description='a very sharp discus', weight=2)
-keycard = inventory.Item('keycard', description='a panacea to your issues', weight=1)
-USB = inventory.Item('USB', description='a wicked device', weight=1)
+CD = inventory.Item('CD', description='a very sharp discus', weight=2) #create CD item
+keycard = inventory.Item('keycard', description='a panacea to your issues', weight=1) #create keycard item
+USB = inventory.Item('USB', description='a wicked device', weight=1) #create USB item
 
-cabinet1.pick_item(CD)
-cabinet2.pick_item(keycard)
-cabinet3.pick_item(USB)
+cabinet1.pick_item(CD) #put CD in cabinet 1
+cabinet2.pick_item(keycard) #put keycard in cabinet 2
+cabinet3.pick_item(USB) #put USB in cabinet 3
    
 #function to access computer 1 
 def computer1():
@@ -94,8 +94,8 @@ def computer3():
         print " /  *************  \ "    
         print "---------------------"
         print "Computer 3 seems to require a password." #if password has not yet been entered correctly, prompt user
-        while password == False:
-            passDecision = raw_input("Enter a password : ") #keep prompting user to enter correct password if incorrect one is entered
+        if password == False:
+            passDecision = raw_input("Enter a password : ").strip() #keep prompting user to enter correct password if incorrect one is entered
             if hashlib.sha256(passDecision.lower()).hexdigest().upper() == "A1D648CFFA6E2BA0F94C51F51E0CB8F2BE4FA6C3D227176016291F9CE64E90E7": #compare entered phrase to correct HASH-256 encoded phrase
                 print "   _______________   " 
                 print "  |  ___________  |  "
@@ -133,7 +133,7 @@ def SOS():
             print "|}}:{{|"
             print "|/_~_\|"
             print "You seem to have a keycard in your inventory."
-            keycardDecision = raw_input("Would you like to use your keycard to send an SOS message to the ships A)Yes B)No : ")
+            keycardDecision = raw_input("Would you like to use your keycard to send an SOS message to the ships A)Yes B)No : ").strip()
             if keycardDecision.upper() == "A" or keycardDecision.upper() == "YES":
                 print " ___  ___  ___  " #send SOS message if user agrees to use keycard
                 print "/ __|/ _ \/ __| "
@@ -167,7 +167,7 @@ def door():
             print " _   ,--()"
             print "( )-'-.------|>"
             print " -     `--[]"
-            usbDecision = raw_input("Would you like to use your USB to open the door A)Yes B)No : ")
+            usbDecision = raw_input("Would you like to use your USB to open the door A)Yes B)No : ").strip()
             if usbDecision.upper() == "A" or usbDecision.upper() == "YES":
                 print " ______________   "
                 print "|\ ___________ /| "
@@ -195,9 +195,9 @@ def show_cabinet_1(h=False, f=None):
         print '      show the items currently visible in Cabinet 1'
         return
     if len(cabinet1.as_tuple()) < 1:
-        print 'Cabinet 1 is empty and void'
+        print 'Cabinet 1 is empty and void' #display empty message if cabinet 1 is empty
         return -1
-    print '\nCurrent items visible in Cabinet 1:'
+    print '\nCurrent items visible in Cabinet 1:' #display current items in cabinet 1
     return cabinet1.print_inv()    
     
 def show_cabinet_2(h=False, f=None):
@@ -206,20 +206,20 @@ def show_cabinet_2(h=False, f=None):
         print '      show the items currently visible in Cabinet 2'
         return
     if len(cabinet2.as_tuple()) < 1:
-        print 'Cabinet 2 is empty and void'
+        print 'Cabinet 2 is empty and void' #display empty message if cabinet 2 is empty
         return -1
-    print '\nCurrent items visible in Cabinet 2:'
+    print '\nCurrent items visible in Cabinet 2:' #display current items in cabinet 2
     return cabinet2.print_inv()    
     
 def show_cabinet_3(h=False, f=None):
     if h:
         print 'Help entry for: '+f
-        print '      show the items currently visible in Cabinet 3'
+        print '      show the items currently visible in Cabinet 3' 
         return
     if len(cabinet3.as_tuple()) < 1:
-        print 'Cabinet 3 is empty and void'
+        print 'Cabinet 3 is empty and void' #display empty message if cabinet 3 is empty
         return -1
-    print '\nCurrent items visible in Cabinet 3:'
+    print '\nCurrent items visible in Cabinet 3:' #display current items in cabinet 3
     return cabinet3.print_inv() 
 
 #function to access cabinet 1                
@@ -229,7 +229,7 @@ def cabinet_1(h=False, f=None):
         print '      show the items currently visible in Cabinet 1'
         return
     if "CD" in [item.name for item in inv.as_tuple()]:
-        print "There is nothing in Cabinet 1." #if welder is already in inv, say cabinet 1 is empty
+        print "There is nothing in Cabinet 1." #if CD is already in inventory, say cabinet 1 is empty
         return -1
     else:
         print " _________"
@@ -240,17 +240,17 @@ def cabinet_1(h=False, f=None):
         print "| |_____| |"
         print "|_|_____|_|"
         print "There seems to be a CD in Cabinet 1."       
-        cdDecision = raw_input("Would you like to put the CD into your inventory A)Yes B)No : ") #prompt user to put CD into inventory
+        cdDecision = raw_input("Would you like to put the CD into your inventory A)Yes B)No : ").strip() #prompt user to put CD into inventory
         if cdDecision.upper() == "A" or cdDecision.upper() == "YES":
             if len(inv.as_tuple()) > 5:
-                print "Your inventory seems to be full." #if inv has 5 items, do not put welder into inv
+                print "Your inventory seems to be full." #if inventory has 5 items, do not put CD into inventory
             else:
                 try:
-                    show_cabinet_1()
-                    index = int(raw_input('room 4 : pick up at [room] index => '))
-                    tmp = cabinet1.drop_item(index)
+                    show_cabinet_1() #display items in cabinet 1
+                    index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
+                    tmp = cabinet1.drop_item(index) #drop item from cabinet 1
                     assert tmp != inventory.NULL
-                    assert inv.pick_item(tmp) > 0
+                    assert inv.pick_item(tmp) > 0 #pick up item into inventory
                 except:
                      err('inventory error (invalid item to pick up)')
 
@@ -261,7 +261,7 @@ def cabinet_2(h=False, f=None):
         print '      show the items currently visible in Cabinet 2'
         return
     if "keycard" in [item.name for item in inv.as_tuple()]:
-        print "There is nothing in Cabinet 2." #if welder is already in inv, say cabinet 2 is empty
+        print "There is nothing in Cabinet 2." #if keycard is already in inventory, say cabinet 2 is empty
         return -1
     else:
         print " _____ "
@@ -271,17 +271,17 @@ def cabinet_2(h=False, f=None):
         print "|}}:{{|"
         print "|/_~_\|"
         print "There seems to be a keycard in Cabinet 2."
-        kcDecision = raw_input("Would you like to put the keycard into your inventory A)Yes B)No : ") #prompt user to put keycard into inventory
+        kcDecision = raw_input("Would you like to put the keycard into your inventory A)Yes B)No : ").strip() #prompt user to put keycard into inventory
         if kcDecision.upper() == "A" or kcDecision.upper() == "YES":
             if len(inv.as_tuple()) > 5:
-                print "Your inv seems to be full." #if inv has 5 items, do not put hammer into inv
+                print "Your inventory seems to be full." #if inventory has 5 items, do not put keycard into inventory
             else:
                 try:
-                    show_cabinet_2()
-                    index = int(raw_input('room 4 : pick up at [room] index => '))
-                    tmp = cabinet2.drop_item(index)
+                    show_cabinet_2() #display items in cabinet 2
+                    index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
+                    tmp = cabinet2.drop_item(index) #drop item from cabinet 2
                     assert tmp != inventory.NULL
-                    assert inv.pick_item(tmp) > 0
+                    assert inv.pick_item(tmp) > 0 #pick up item into inventory
                 except:
                      err('inventory error (invalid item to pick up)')
 
@@ -292,24 +292,24 @@ def cabinet_3(h=False, f=None):
         print '      show the items currently visible in Cabinet 3'
         return
     if "USB" in [item.name for item in inv.as_tuple()]:
-        print "There is nothing in Cabinet 3." #if welder is already in inv, say cabinet 3 is empty
+        print "There is nothing in Cabinet 3." #if USB is already in inventory, say cabinet 3 is empty
         return -1
     else:
         print " _   ,--()"
         print "( )-'-.------|>"
         print " -     `--[]"
         print "There seems to be a USB in Cabinet 3."
-        usbbDecision = raw_input("Would you like to put the USB into your inventory A)Yes B)No : ") #prompt user to put USB into inventory
+        usbbDecision = raw_input("Would you like to put the USB into your inventory A)Yes B)No : ").strip() #prompt user to put USB into inventory
         if usbbDecision.upper() == "A" or usbbDecision.upper() == "YES":
             if len(inv.as_tuple()) > 5:
-                print "Your inv seems to be full." #if inv has 5 items, do not put hammer into inv
+                print "Your inventory seems to be full." #if inventory has 5 items, do not put hammer into inventory
             else:
                 try:
-                    show_cabinet_3()
-                    index = int(raw_input('room 4 : pick up at [room] index => '))
-                    tmp = cabinet3.drop_item(index)
+                    show_cabinet_3() #display items in cabinet 3
+                    index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
+                    tmp = cabinet3.drop_item(index) #drop item from cabinet 3
                     assert tmp != inventory.NULL
-                    assert inv.pick_item(tmp) > 0
+                    assert inv.pick_item(tmp) > 0 #pick up item into inventory
                 except:
                      err('inventory error (invalid item to pick up)')
 
@@ -319,10 +319,10 @@ def showInv(h=False, f=None):
         print 'Help entry for: '+f
         print '      show your current inventory'
         return
-    if len(inv.as_tuple()) < 1: #if nothing in inv, display appropriate message
+    if len(inv.as_tuple()) < 1: #if nothing in inventory, display appropriate message
         print 'your inventory is empty'
         return -1
-    print '\nCurrent state of your inventory:' #display all contents in inv with quantities (1)
+    print '\nCurrent state of your inventory:' #display all contents in inventory
     return inv.print_inv()
 
 #function to drop items from user inv
@@ -331,19 +331,19 @@ def dropItem(h=False, f=None):
         print 'Help entry for: '+f
         print '      interactively drop an item from your inventory'
         return
-    if len(inv.as_tuple()) < 1: #if nothing in inv, display appropriate message
+    if len(inv.as_tuple()) < 1: #if nothing in inventory, display appropriate message
         err('no items to drop')
         return
     try:
-        showInv()  #display contents of inv
-        index = int(raw_input('room 4 : drop at [inventory] index => '))
-        tmp = inv.drop_item(index)
+        showInv()  #display contents of inventory
+        index = int(raw_input('room 4 : drop at [inventory] index => ').strip()) #user input index
+        tmp = inv.drop_item(index) #drop item at index
         assert tmp != inventory.NULL
         assert cabinet1.pick_item(tmp) > 0
         assert cabinet2.pick_item(tmp) > 0
         assert cabinet3.pick_item(tmp) > 0
     except:
-        err('inv error (invalid item to drop)') #show error message if entry does not match any inv item
+        err('inventory error (invalid item to drop)') #show error message if entry does not match any inventory item
 
 #function to display format of all errors
 def err(text):
@@ -352,7 +352,7 @@ def err(text):
 #function that intentionally does nothing in order to exit program    
 def bye(h=False, f=None):
     if h:
-        print 'Help entry for: quit, leave, exit, q, X'  # need many aliases
+        print 'Help entry for: quit'
         print '  * - the exit function'
         print '      leaves the room'
         print '      all aliases of this function are equivalent'
