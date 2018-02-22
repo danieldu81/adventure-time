@@ -1,17 +1,14 @@
-import inventory  # probably not strictly needed
-import random
+import inventory    # probably not strictly needed
+import random       # randomize each password to make it un-guessable
 import numpy as np  # matrix math
-
-# totally secure matrix encryption!
-password = 'Gallia est omnis divisa in partes tres...'
-cipher_text = []
-encoding_matrix = []
+import string       # generate a random password for each session
+import hashlib      # for extra security, don't pass around password plaintext
 
 def print_matrix(mat, rounding=False, squeeze=False):
     # prints a matrix
     # if `rounding' is set, only round to the nearest int when printing
     # if `squeeze' is set, print the entire matrix in one line
-    
+
     # TODO: automatically find digits in longest number in matrix
     for r in mat:
         for c in r:
@@ -26,6 +23,7 @@ def print_matrix(mat, rounding=False, squeeze=False):
 
 def str2matrix(text, size=3):
     # converts a text string to a matrix with given dimensions
+    # uses ASCII encoding
     ret = []
     buf = ''
     for i, c in enumerate(text):
@@ -40,13 +38,13 @@ def str2matrix(text, size=3):
 def gen_enc_matrix(n_rows=3, n_cols=3, max_num=10):
     # generates a random encoding matrix with the numbers provided
     # in theory, n_rows == n_cols for the encoding to work
-    
+
     # returns the encoding matrix on success
     # returns a [[-1]] matrix on failure
     err_val = [[-1]]
     if n_rows != n_cols:
         return err_val
-    
+
     rng = random.SystemRandom()  # more cryptographically secure
     m_invertible = False
     while not m_invertible:
@@ -63,31 +61,54 @@ def gen_enc_matrix(n_rows=3, n_cols=3, max_num=10):
             pass
     return ret  # this could be in the loop, but is here for clarity
 
-def test_matrix():
-    enc_m = gen_enc_matrix()
-    inv_m = np.linalg.inv(enc_m).tolist()  # should be guaranteed to work
-    print '=== encoding matrix is ==='
-    print_matrix(enc_m)
-    print ''
-    print '=== inverted matrix is ==='
-    print_matrix(inv_m)
-    print ''
-    print '=== original message is ==='
-    print password
-    print ''
-    print '=== encrypted message is ==='
-    ciphertext = np.dot(str2matrix(password), enc_m).tolist()
-    print_matrix(ciphertext, rounding=True, squeeze=True)
-    print ''
-    print '=== multiplying by inv yields ==='
-    decrypted = np.dot(ciphertext, inv_m).tolist()
-    print_matrix(decrypted, rounding=True)
-    print ''
-    print '=== this maps to ASCII letters ==='
-    print ''.join([chr(int(round(a))) for b in decrypted for a in b])
+def init_problem(pword_len=14, m_size=3):
+    # generates a random problem
+    # accepts two optional arguments:
+    #   pword_len: the length of the password
+    #   m_size: the size of the [square] encoding matrix to use
+    #           m_size=3 is recommended if you want it to be solvable by hand
+    # returns the problem as a tuple:
+    #   (
+    #       sha256 hash of password,
+    #       encoded matrix,
+    #       encoding matrix
+    #   )
+    enc_m = gen_enc_matrix(n_rows=m_size, n_cols=m_size)
+    rng = random.SystemRandom()
+    password = ''.join([rng.choice(string.ascii_letters + string.digits)
+                       for _ in range(pword_len)])
+    ciphertext = np.dot(str2matrix(password, size=m_size), enc_m).tolist()
+    return (hashlib.sha256(password).hexdigest(), ciphertext, enc_m)
+
+def solve_problem(ciphertext, enc_m):
+    # finds the solution to the encryption problem
+    # this is not made available to the user, but exists for easier debugging
+    # returns the decrypted password on success and empty string on failure
+    # failure should never occur on a well-crafted problem
+    try:
+        dec_m = np.linalg.inv(enc_m).tolist()
+        plaintext = np.dot(ciphertext, dec_m).tolist()
+        return ''.join([chr(int(round(c))) for row in plaintext for c in row])
+    except:
+        return ''
+
+def check_sol(guess, real_pword_hash):
+    # checks if a given solution is correct
+    if hashlib.sha256(guess.strip()).hexdigest() == real_pword_hash:
+        print 'Success!'
+    else:
+        print 'Nope.'
 
 def err(text):
     print 'room7 : error : %s' % text
+
+def leave():
+    pass
+
+usr_dict = {
+    'q': leave,
+    'guess': check_sol
+}
 
 def play():
     # say hello and be nice to user
@@ -98,13 +119,34 @@ def play():
             'is encrypted as a matrix, and you know the encoding matrix! '
             'Invert the matrix to find the password and escape the spaceship!')
     print '\nHint: The character encoding is ASCII'
-    print 'Okay, I guess you can use a TI-nspire if you REALLY want...'
-    
+    print 'Okay, I guess you can use a TI-nspire if you REALLY want...\n'
+
+    # randomly and securely generate the problem
+    pword_hash, ciphertext, enc_m = init_problem(pword_len=14, m_size=3)
+    print 'The problem is as follows:'
+    print '=== ciphertext ==='
+    print_matrix(ciphertext, rounding=True, squeeze=True)
+    print ''
+    print '=== encoding matrix ==='
+    print_matrix(enc_m, rounding=True)
+
+    # for debugging
+    # sol = solve_problem(ciphertext, enc_m)
+    # print sol
+
     # user input loop
     cmd = ''
-    while cmd not in ['quit', 'leave', 'exit', 'q', 'X']:
+    while cmd not in ['q']:
         cmd = raw_input('room 7 => ')
+        try:
+            usr_dict[cmd]()
+        except:
+            try:
+                # is command `guess <pass>'?
+                a, b = cmd.split(' ')
+                usr_dict[a](b, pword_hash)
+            except:
+                err('command not recognized')
 
 if __name__ == '__main__':
-    test_matrix()
-    #play()
+    play()
