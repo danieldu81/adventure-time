@@ -60,26 +60,25 @@ def computer():
         print " /  *************  \ "    
         print "---------------------"
         print "The computer screen seems to require a password." #if password has not yet been entered correctly, prompt user
-        if password == False:
-            passDecision = raw_input("Enter a password : ").strip() #keep prompting user to enter correct password if incorrect one is entered
-            if hashlib.sha256(passDecision.lower()).hexdigest().upper() == "0BC3A5AE30466DE3D77B506D364EABC28B1B7CEEA061C2519328C7BE72827483": #compare entered phrase to correct HASH-256 encoded phrase
-                print "That is the correct password."
-                print "   _______________   " 
-                print "  |  ___________  |  "
-                print "  | |           | |  "
-                print "  | |           | |  "   
-                print "  | |   FIXED   | |  "    
-                print "  | |           | |  "  
-                print "  | |___     ___| |  "  
-                print "  |_____|\_/|_____|  "  
-                print "    _|__|/ \|__|_    "
-                print "   / *********** \   "     
-                print " /  *************  \ "    
-                print "---------------------"
-                print "The computer's error has been fixed." 
-                password = True #set variable password to true
-            else:
-                print "Sorry, that is incorrect."
+        passDecision = raw_input("Enter a password : ").strip() #keep prompting user to enter correct password if incorrect one is entered
+        if hashlib.sha256(passDecision.lower()).hexdigest().upper() == "0BC3A5AE30466DE3D77B506D364EABC28B1B7CEEA061C2519328C7BE72827483": #compare entered phrase to correct HASH-256 encoded phrase
+            print "That is the correct password."
+            print "   _______________   " 
+            print "  |  ___________  |  "
+            print "  | |           | |  "
+            print "  | |           | |  "   
+            print "  | |   FIXED   | |  "    
+            print "  | |           | |  "  
+            print "  | |___     ___| |  "  
+            print "  |_____|\_/|_____|  "  
+            print "    _|__|/ \|__|_    "
+            print "   / *********** \   "     
+            print " /  *************  \ "    
+            print "---------------------"
+            print "The computer's error has been fixed." 
+            password = True #set variable password to true
+        else:
+            print "Sorry, that is incorrect."
 
 #function to access engine                
 def engine():

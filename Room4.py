@@ -94,26 +94,25 @@ def computer3():
         print " /  *************  \ "    
         print "---------------------"
         print "Computer 3 seems to require a password." #if password has not yet been entered correctly, prompt user
-        if password == False:
-            passDecision = raw_input("Enter a password : ").strip() #keep prompting user to enter correct password if incorrect one is entered
-            if hashlib.sha256(passDecision.lower()).hexdigest().upper() == "A1D648CFFA6E2BA0F94C51F51E0CB8F2BE4FA6C3D227176016291F9CE64E90E7": #compare entered phrase to correct HASH-256 encoded phrase
-                print "   _______________   " 
-                print "  |  ___________  |  "
-                print "  | |           | |  "
-                print "  | |           | |  "   
-                print "  | |  ACCESSED | |  "    
-                print "  | |           | |  "  
-                print "  | |___     ___| |  "  
-                print "  |_____|\_/|_____|  "  
-                print "    _|__|/ \|__|_    "
-                print "   / *********** \   "     
-                print " /  *************  \ "    
-                print "---------------------"
-                print "That is the correct password."
-                print "Computer 3 has been accessed."
-                password = True #set variable password to true
-            else:
-                print "Sorry, that is incorrect."
+        passDecision = raw_input("Enter a password : ").strip() #keep prompting user to enter correct password if incorrect one is entered
+        if hashlib.sha256(passDecision.lower()).hexdigest().upper() == "A1D648CFFA6E2BA0F94C51F51E0CB8F2BE4FA6C3D227176016291F9CE64E90E7": #compare entered phrase to correct HASH-256 encoded phrase
+            print "   _______________   " 
+            print "  |  ___________  |  "
+            print "  | |           | |  "
+            print "  | |           | |  "   
+            print "  | |  ACCESSED | |  "    
+            print "  | |           | |  "  
+            print "  | |___     ___| |  "  
+            print "  |_____|\_/|_____|  "  
+            print "    _|__|/ \|__|_    "
+            print "   / *********** \   "     
+            print " /  *************  \ "    
+            print "---------------------"
+            print "That is the correct password."
+            print "Computer 3 has been accessed."
+            password = True #set variable password to true
+        else:
+            print "Sorry, that is incorrect."
 
 #function to send SOS message               
 def SOS():
