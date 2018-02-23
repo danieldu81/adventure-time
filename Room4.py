@@ -1,14 +1,8 @@
-#room 4 introduction and directions
-print "\nWelcome to room 4!\n"
-print "===================================================================================================="
-print "You have entered the command center."
-print "You are surrounded by many computers which are not functioning. To access the terminal, type in the"
-print "correct password into the matching computer. Then, send an SOS to nearby ships using a keycard."
-print "===================================================================================================="
-print "\nYou can get help with the \'?\' command. Good luck!"
-
 import hashlib
 import inventory
+
+name = 'room 4'
+win = False
 
 passwords = "ketchup, mustard, ranch" #possible passwords for room
 message = False #variable to keep track of state of engine
@@ -27,86 +21,86 @@ USB = inventory.Item('USB', description='a wicked device', weight=1) #create USB
 cabinet1.pick_item(CD) #put CD in cabinet 1
 cabinet2.pick_item(keycard) #put keycard in cabinet 2
 cabinet3.pick_item(USB) #put USB in cabinet 3
-   
-#function to access computer 1 
+
+#function to access computer 1
 def computer1():
-    print "   _______________   " 
+    print "   _______________   "
     print "  |  ___________  |  "
     print "  | |           | |  "
-    print "  | |           | |  "   
-    print "  | |   BROKEN  | |  "    
-    print "  | |           | |  "  
-    print "  | |___     ___| |  "  
-    print "  |_____|\_/|_____|  "  
+    print "  | |           | |  "
+    print "  | |   BROKEN  | |  "
+    print "  | |           | |  "
+    print "  | |___     ___| |  "
+    print "  |_____|\_/|_____|  "
     print "    _|__|/ \|__|_    "
-    print "   / *********** \   "     
-    print " /  *************  \ "    
+    print "   / *********** \   "
+    print " /  *************  \ "
     print "---------------------"
     print "Computer 1 has been opened."
     print "Computer 1 looks very interesting, but it appears to be broken." #display filler message
- 
-#function to access computer 2       
+
+#function to access computer 2
 def computer2():
-    print "   _______________   " 
+    print "   _______________   "
     print "  |  ___________  |  "
     print "  | |           | |  "
-    print "  | |           | |  "   
-    print "  | |   BROKEN  | |  "    
-    print "  | |           | |  "  
-    print "  | |___     ___| |  "  
-    print "  |_____|\_/|_____|  "  
+    print "  | |           | |  "
+    print "  | |   BROKEN  | |  "
+    print "  | |           | |  "
+    print "  | |___     ___| |  "
+    print "  |_____|\_/|_____|  "
     print "    _|__|/ \|__|_    "
-    print "   / *********** \   "     
-    print " /  *************  \ "    
+    print "   / *********** \   "
+    print " /  *************  \ "
     print "---------------------"
     print "Computer 2 has been opened."
     print "Computer 2 looks very interesting, but it appears to be broken." #display filler message
-        
+
 #function to access computer 3 and password
-def computer3():   
-    global password 
+def computer3():
+    global password
     print "Computer 3 has been opened."
-    if password == True:  
-        print "   _______________   " 
+    if password == True:
+        print "   _______________   "
         print "  |  ___________  |  "
         print "  | |           | |  "
-        print "  | |           | |  "   
-        print "  | |           | |  "    
-        print "  | |           | |  "  
-        print "  | |___     ___| |  "  
-        print "  |_____|\_/|_____|  "  
+        print "  | |           | |  "
+        print "  | |           | |  "
+        print "  | |           | |  "
+        print "  | |___     ___| |  "
+        print "  |_____|\_/|_____|  "
         print "    _|__|/ \|__|_    "
-        print "   / *********** \   "     
-        print " /  *************  \ "    
+        print "   / *********** \   "
+        print " /  *************  \ "
         print "---------------------"
         print "Computer 3 looks very interesting." #if password has already been entered correctly before, display filler message
     else:
-        print "   _______________   " 
+        print "   _______________   "
         print "  |  ___________  |  "
         print "  | |           | |  "
-        print "  | |           | |  "   
-        print "  | |  PASSWORD | |  "    
-        print "  | |           | |  "  
-        print "  | |___     ___| |  "  
-        print "  |_____|\_/|_____|  "  
+        print "  | |           | |  "
+        print "  | |  PASSWORD | |  "
+        print "  | |           | |  "
+        print "  | |___     ___| |  "
+        print "  |_____|\_/|_____|  "
         print "    _|__|/ \|__|_    "
-        print "   / *********** \   "     
-        print " /  *************  \ "    
+        print "   / *********** \   "
+        print " /  *************  \ "
         print "---------------------"
         print "Computer 3 seems to require a password." #if password has not yet been entered correctly, prompt user
         passDecision = raw_input("Enter a password : ").strip() #keep prompting user to enter correct password if incorrect one is entered
         if hashlib.sha256(passDecision.lower()).hexdigest().upper() == "A1D648CFFA6E2BA0F94C51F51E0CB8F2BE4FA6C3D227176016291F9CE64E90E7": #compare entered phrase to correct HASH-256 encoded phrase
-            print "   _______________   " 
+            print "   _______________   "
             print "  |  ___________  |  "
             print "  | |           | |  "
-            print "  | |           | |  "   
-            print "  | |  ACCESSED | |  "    
-            print "  | |           | |  "  
-            print "  | |___     ___| |  "  
-            print "  |_____|\_/|_____|  "  
+            print "  | |           | |  "
+            print "  | |  ACCESSED | |  "
+            print "  | |           | |  "
+            print "  | |___     ___| |  "
+            print "  |_____|\_/|_____|  "
             print "    _|__|/ \|__|_    "
-            print "   / *********** \   "     
-            print " /  *************  \ "    
+            print "   / *********** \   "
+            print " /  *************  \ "
             print "---------------------"
             print "That is the correct password."
             print "Computer 3 has been accessed."
@@ -114,14 +108,14 @@ def computer3():
         else:
             print "Sorry, that is incorrect."
 
-#function to send SOS message               
+#function to send SOS message
 def SOS():
     global message
     if password == False:
         print "A computer must be fixed before sending the SOS message." #do not allow user to send SOS message if correct password has not been entered into computer 3
     elif message == True:
         print "An SOS message has already been sent." #if SOS message has already been sent before, display filler message
-    else: 
+    else:
         print "The ship's communication line with nearby ships has been opened."
         print "A keycard is needed to send an SOS message."
         if "keycard" in [item.name for item in inv.as_tuple()]: #if user has keycard in inventory, prompt to use the keycard to send SOS message
@@ -141,7 +135,7 @@ def SOS():
                 print "An SOS message has been sent."
                 message = True
 
-#function to access door to next room    
+#function to access door to next room
 def door():
     print "The door to the next room lies in front of you."
     print "An SOS message must be sent before proceeding."
@@ -187,7 +181,9 @@ def door():
                 print "You enter the next room." #if user agrees to use USB, open door and exit program
                 global cmd
                 cmd = 'quit' #set cmd to quit to exit program
-                
+                global win
+                win = True
+
 def show_cabinet_1(h=False, f=None):
     if h:
         print 'Help entry for: '+f
@@ -197,8 +193,8 @@ def show_cabinet_1(h=False, f=None):
         print 'Cabinet 1 is empty and void' #display empty message if cabinet 1 is empty
         return -1
     print '\nCurrent items visible in Cabinet 1:' #display current items in cabinet 1
-    return cabinet1.print_inv()    
-    
+    return cabinet1.print_inv()
+
 def show_cabinet_2(h=False, f=None):
     if h:
         print 'Help entry for: '+f
@@ -208,20 +204,20 @@ def show_cabinet_2(h=False, f=None):
         print 'Cabinet 2 is empty and void' #display empty message if cabinet 2 is empty
         return -1
     print '\nCurrent items visible in Cabinet 2:' #display current items in cabinet 2
-    return cabinet2.print_inv()    
-    
+    return cabinet2.print_inv()
+
 def show_cabinet_3(h=False, f=None):
     if h:
         print 'Help entry for: '+f
-        print '      show the items currently visible in Cabinet 3' 
+        print '      show the items currently visible in Cabinet 3'
         return
     if len(cabinet3.as_tuple()) < 1:
         print 'Cabinet 3 is empty and void' #display empty message if cabinet 3 is empty
         return -1
     print '\nCurrent items visible in Cabinet 3:' #display current items in cabinet 3
-    return cabinet3.print_inv() 
+    return cabinet3.print_inv()
 
-#function to access cabinet 1                
+#function to access cabinet 1
 def cabinet_1(h=False, f=None):
     if h:
         print 'Help entry for: '+f
@@ -238,7 +234,7 @@ def cabinet_1(h=False, f=None):
         print "| |     | |"
         print "| |_____| |"
         print "|_|_____|_|"
-        print "There seems to be a CD in Cabinet 1."       
+        print "There seems to be a CD in Cabinet 1."
         cdDecision = raw_input("Would you like to put the CD into your inventory A)Yes B)No : ").strip() #prompt user to put CD into inventory
         if cdDecision.upper() == "A" or cdDecision.upper() == "YES":
             if len(inv.as_tuple()) > 5:
@@ -253,7 +249,7 @@ def cabinet_1(h=False, f=None):
                 except:
                      err('inventory error (invalid item to pick up)')
 
-#function to access cabinet 2    
+#function to access cabinet 2
 def cabinet_2(h=False, f=None):
     if h:
         print 'Help entry for: '+f
@@ -284,7 +280,7 @@ def cabinet_2(h=False, f=None):
                 except:
                      err('inventory error (invalid item to pick up)')
 
-#function to access cabinet 3    
+#function to access cabinet 3
 def cabinet_3(h=False, f=None):
     if h:
         print 'Help entry for: '+f
@@ -347,8 +343,8 @@ def dropItem(h=False, f=None):
 #function to display format of all errors
 def err(text):
     print 'room 4 : error : %s' % text #print error message
-    
-#function that intentionally does nothing in order to exit program    
+
+#function that intentionally does nothing in order to exit program
 def bye(h=False, f=None):
     if h:
         print 'Help entry for: quit'
@@ -356,7 +352,7 @@ def bye(h=False, f=None):
         print '      leaves the room'
         print '      all aliases of this function are equivalent'
 
-#function to display commands in order to help user understand how to use program        
+#function to display commands in order to help user understand how to use program
 def help(h=False, f=None):
     if h:
         print 'Help entry for: '+f
@@ -370,20 +366,37 @@ def help(h=False, f=None):
     print 'Available commands:' #print each command in userDictionary for user to use
     for key in userDictionary:
         print '  '+key
-        
-#dictionary containing commands and respective function calls         
+
+#dictionary containing commands and respective function calls
 userDictionary = {'?': help, 'quit': bye, 'computer 1': computer1, 'computer 2': computer2, 'computer 3': computer3,
                 'door': door, 'cabinet 1': cabinet_1, 'cabinet 2': cabinet_2, 'cabinet 3': cabinet_3,
                 'send sos': SOS, 'show inv': showInv, 'drop item': dropItem}
-        
-#user input prompt/commands
-while cmd not in ['quit']:
-    cmd = raw_input('room 4 => ').strip() #strip user input of whitespace
-    try:
-        userDictionary[cmd]() #see if the command is in the dictionary
-    except:
+
+def play(global_inv):
+    global inv
+    inb = global_inv
+
+    #room 4 introduction and directions
+    print "\nWelcome to room 4!\n"
+    print "="*80
+    print "You have entered the command center."
+    print "You are surrounded by many computers which are not functioning. To access the terminal, type in the"
+    print "correct password into the matching computer. Then, send an SOS to nearby ships using a keycard."
+    print "="*80
+    print "\nYou can get help with the \'?\' command. Good luck!"
+
+    #user input prompt/commands
+    global cmd
+    while cmd not in ['quit']:
+        cmd = raw_input('room 4 => ').strip() #strip user input of whitespace
         try:
-            assert cmd[-1] == '?' #see if command is <func>?
-            userDictionary[cmd[:-1]](h=True, f=cmd[:-1])
+            userDictionary[cmd]() #see if the command is in the dictionary
         except:
-            err('unrecognized input. try \'?\' for help') #show error message for unrecognized input
+            try:
+                assert cmd[-1] == '?' #see if command is <func>?
+                userDictionary[cmd[:-1]](h=True, f=cmd[:-1])
+            except:
+                err('unrecognized input. try \'?\' for help') #show error message for unrecognized input
+
+if __name__ == '__main__':
+    play(inventory.Inventory())

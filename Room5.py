@@ -8,6 +8,7 @@ proceed to the next stage.
 import inventory
 
 name = 'room 5'
+win = False  # if the `win' flag is set, main.py is notified
 
 # for testing, generate a user inventory
 inv = inventory.Inventory()
@@ -47,7 +48,6 @@ atw_str = r'''
 atw_mcn = inventory.Inventory(max_len=5)
 
 # check the atwood machine
-win = False  # if the `win' flag is set, main.py is notified
 def solve_machine(h=False, f=None):
     if h:
         print 'Help entry for: '+f
@@ -69,6 +69,7 @@ def solve_machine(h=False, f=None):
         t_weight += w[1]
         assert t_weight == w[0]
         print 'your solution to the Atwood machine is correct'
+        global win
         win = True
     except:
         print 'your solution to the Atwood machine is incorrect'
@@ -79,28 +80,24 @@ room_items = inventory.Inventory()
 # just for testing now
 axe = inventory.Item('axe',
                     description='a mighty weapon',
-                    weight=3)
+                    weight=4)
 sword = inventory.Item('sword',
                     description='an awesome weapon',
                     weight=2)
 rail_gun = inventory.Item('rail gun',
                     description='a terrifying weapon',
-                    weight=4)
+                    weight=8)
 water_pistol = inventory.Item('water pistol',
                     description='a weapon of mass destruction',
                     weight=1)
 glasses = inventory.Item('glasses',
                     description='useful apparatus',
                     weight=1)
-chinaman = inventory.Item('chinaman',
-                    description='ching chong ding dong',
-                    weight=0.1)
 room_items.pick_item(axe)
 room_items.pick_item(sword)
 room_items.pick_item(rail_gun)
 room_items.pick_item(water_pistol)
 room_items.pick_item(glasses)
-room_items.pick_item(chinaman)
 
 def show_room_items(h=False, f=None):
     if h:

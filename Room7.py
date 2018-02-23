@@ -5,6 +5,8 @@ import string       # generate a random password for each session
 import hashlib      # for extra security, don't pass around password plaintext
 
 name = 'room 7'
+win = False
+
 inv = inventory.Inventory()
 
 def print_matrix(mat, rounding=False, squeeze=False):
@@ -95,7 +97,6 @@ def solve_problem(ciphertext, enc_m):
     except:
         return ''
 
-win = False
 def check_sol(guess, real_pword_hash):
     # checks if a given solution is correct
     if hashlib.sha256(guess.strip()).hexdigest() == real_pword_hash:

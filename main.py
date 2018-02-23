@@ -1,6 +1,6 @@
 import sys, time
 import inventory
-import Room5, Room7
+import Room3, Room4, Room5, Room7
 
 title_space = r'''
          ___           ___         ___           ___           ___
@@ -39,12 +39,12 @@ print("Get ready for a FANTASTIC adventure! Your adventure will start in...")
     time.sleep(1)
     print i'''
 
-print("\nThe year is 20XX. Your name is Zeev from planet Penseev and currently you are hurtling 65 km/s towards an unknown planet.As\none of the few survivors of the human race, it is your responsibility to travel from planet to planet in the hopes of finding a new\nhome for your people. Unbeknownst to you, the ship has malfunctioned and as a result you have been woken up early from your cryosleep...\n\n")
+print("\nThe year is 20XX. Your name is Zeev from planet Penseev and currently you are hurtling 65 km/s towards an unknown planet.As one of the few survivors of the human race, it is your responsibility to travel from planet to planet in the hopes of finding a new home for your people. Unbeknownst to you, the ship has malfunctioned and as a result you have been woken up early from your cryosleep...\n\n")
 
 print '='*80
 
 # setup user variables
-inv = inventory.Inventory()
+inv = inventory.Inventory(max_len=7)
 
 # setup rooms
 # for this to work, each room must make available three things:
@@ -54,7 +54,7 @@ inv = inventory.Inventory()
 #   3. a global variable `win' that stores whether or not that room's challenge
 #      has been completed as a bool
 # all gameplay mechanics are left to individual rooms
-rooms = [Room5, Room7]  # list of rooms
+rooms = [Room3, Room4, Room5, Room7]  # list of rooms
 current_room = 0
 
 def to_room():
