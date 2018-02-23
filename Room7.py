@@ -99,6 +99,7 @@ def check_sol(guess, real_pword_hash):
     # checks if a given solution is correct
     if hashlib.sha256(guess.strip()).hexdigest() == real_pword_hash:
         print 'Success!'
+        global win
         win = True
     else:
         print 'Nope.'
@@ -108,10 +109,26 @@ def err(text):
 
 def leave():
     pass
+    
+#function to display commands in order to help user understand how to use program        
+def help(h=False, f=None):
+    if h:
+        print 'Help entry for: '+f
+        print '  ? - the help function'
+        print '      can be invoked alone to display available commands'
+        print '      can be invoked after a function for contextual help'
+        print '  examples'
+        print '      ?'
+        print '      guess?'
+        return
+    print 'Available commands:' #print each command in usr_dict for user to use
+    for key in usr_dict:
+        print '  '+key
 
 usr_dict = {
     'q': leave,
-    'guess': check_sol
+    'guess': check_sol,
+    '?': help
 }
 
 def play(global_inv):
@@ -125,7 +142,7 @@ def play(global_inv):
             'Luckily, you recognize the encryption on the door...the password '
             'is encrypted as a matrix, and you know the encoding matrix! '
             'Invert the matrix to find the password and escape the spaceship!')
-    print '\nHint: The character encoding is ASCII'
+    print '\nHint: The character encoding is ASCII (in order to guess one must type \'guess \' and then the ASCII sequence '
     print 'Okay, I guess you can use a TI-nspire if you REALLY want...\n'
 
     # randomly and securely generate the problem
@@ -150,7 +167,7 @@ def play(global_inv):
         except:
             try:
                 # is command `guess <pass>'?
-                a, b = cmd.split(' ')
+                a, b = cmd.strip().split(' ')
                 usr_dict[a](b, pword_hash)
             except:
                 err('command not recognized')
