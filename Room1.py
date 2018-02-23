@@ -36,7 +36,7 @@ class Room:
         self.room[4][3] = 'The blue cryo gel shifts and rotates. It is very mesmerizing...'
         self.room[7][3] = 'There is a metal table bolted to the floor. The table is clean.'
         self.room[1][3] = 'You look up and see a key hanging on the wall.'
-        self.room[14][3] = ''
+        self.room[13][3] = ''
         self.room[5][3] = 'There is a sliding door that seems to require a key to open...'
     
     def update(self):
@@ -47,7 +47,20 @@ class Room:
         for item in self.room:
             if x==item[0] and y==item[1]:
                 return item
-
+    
+    def print_map(self, x, y):
+        grid = ''
+        for y2 in range(0, 5):
+            grid = grid + '+---+---+---+\n|'
+            for x2 in range(0,3):
+                if (x==x2 and y==4-y2):
+                    grid = grid + ' X |'
+                else:
+                    grid = grid + '   |'
+            grid = grid + "\n"
+        grid = grid + '+---+\ /+---+'
+        print(grid)
+        
     def print_room(self): # Prints the room (Debugging)
         for item in self.room:
             print item
@@ -81,20 +94,35 @@ def move(x,y): # Allows the user to choose where they move to
     y2 = -1
     z = ''
     valid = True
-    while z!='w' and z!='a' and z!='s' and z!='d':
+    while z!='w' and z!='a' and z!='s' and z!='d' and z!= '?' and z!= 'm':
         z = raw_input("Where would you like to go? Use WASD to navigate through the room : ")
         z = z.lower()
     if z=='w':
         x2, y2 = move_up(x,y)
+        x2, y2, valid = check_valid(x2, y2)
+        return x2, y2, valid
     if z=='s':
         x2, y2 = move_down(x,y)
+        x2, y2, valid = check_valid(x2, y2)
+        return x2, y2, valid
     if z=='a':
         x2, y2 = move_left(x,y)
+        x2, y2, valid = check_valid(x2, y2)
+        return x2, y2, valid
     if z=='d':
         x2, y2 = move_right(x,y)
+        x2, y2, valid = check_valid(x2, y2)
+        return x2, y2, valid
+    if z =='?':
+        print_help()
+        return x, y, True
+    if z =='m' and glowFound == True:
+        room1.print_map(x, y)
+        return x, y, True
+    else:
+        print("You currently do not have access to this feature.")
+        return x, y, True
     
-    x2, y2, valid = check_valid(x2, y2)
-    return x2, y2, valid
 
 def dark_messages(): # Prints a random message before obtaining glowsticks
     messages = ['You feel someone watching you...', 'The hair on the back of your neck prickles...',
@@ -106,7 +134,11 @@ def light_messages(): # Prints a random message when you have glowsticks
     messages = ['Time is a-ticking...', 'The room looks so much better in the light!']
     x = random.randint(0,1)
     print messages[x]
-    
+
+def print_help():
+    print 'Help'
+
+global room1
 room1 = Room()
 room1.build_room()
 in_room = True
@@ -115,6 +147,7 @@ in_room = True
 x = 0
 y = 4
 valid = True
+global glowFound
 glowFound = False
 keyFound = False
 doorFound = False
