@@ -7,6 +7,8 @@ proceed to the next stage.
 '''
 import inventory
 
+name = 'room 5'
+
 # for testing, generate a user inventory
 inv = inventory.Inventory()
 
@@ -241,6 +243,7 @@ usr_dict = {
 
 def play(global_inv):
     # set file inventory to be global inventory
+    # this is like the worst naming ever, but oh well
     global inv
     inv = global_inv
 
@@ -267,4 +270,4 @@ def play(global_inv):
     return win
 
 if __name__ == '__main__':
-    play()
+    play(inventory.Inventory())

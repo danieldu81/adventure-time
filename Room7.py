@@ -4,6 +4,7 @@ import numpy as np  # matrix math
 import string       # generate a random password for each session
 import hashlib      # for extra security, don't pass around password plaintext
 
+name = 'room 7'
 inv = inventory.Inventory()
 
 def print_matrix(mat, rounding=False, squeeze=False):
@@ -109,8 +110,8 @@ def err(text):
 
 def leave():
     pass
-    
-#function to display commands in order to help user understand how to use program        
+
+#function to display commands in order to help user understand how to use program
 def help(h=False, f=None):
     if h:
         print 'Help entry for: '+f
