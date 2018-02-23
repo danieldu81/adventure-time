@@ -4,7 +4,6 @@ import inventory
 name = 'room 3'
 win = False
 
-passwords = "ketchup, mustard, ranch" #possible passwords for room
 engine = False #variable to keep track of state of engine
 password = False #variable to keep track of state of computer password
 inv = inventory.Inventory() #generate a user inventory
@@ -54,6 +53,7 @@ def computer():
         print " /  *************  \ "
         print "---------------------"
         print "The computer screen seems to require a password." #if password has not yet been entered correctly, prompt user
+        print "Here's a riddle to help you: What is the best condiment to put on pasta, french fries, and fried chicken?" #print riddle
         passDecision = raw_input("Enter a password : ").strip() #keep prompting user to enter correct password if incorrect one is entered
         if hashlib.sha256(passDecision.lower()).hexdigest().upper() == "0BC3A5AE30466DE3D77B506D364EABC28B1B7CEEA061C2519328C7BE72827483": #compare entered phrase to correct HASH-256 encoded phrase
             print "That is the correct password."
@@ -107,9 +107,10 @@ def engine():
             print "|   ---   | |  "
             print "|         | |  "
             print "|_________|/   "
-            print "The engine seems to require a welder to fix it."
-            print inv.as_tuple()
+            print "The engine seems to require a welder to fix it.\n"
             if "welder" in [item.name for item in inv.as_tuple()]: #if user has welder in inventory, prompt to use the welder to fix engine
+                inv.print_inv() #show user inventory
+                print "\n"
                 print "  .-------------.     "
                 print " /             / |    "
                 print "/+============+\ |    "
@@ -384,4 +385,4 @@ def play(global_inv):
                 err('unrecognized input. try \'?\' for help') #show error message for unrecognized input
 
 if __name__ == '__main__':
-    play(inventory.Inventory())
+    play(inventory.Inventory()) #start playing
