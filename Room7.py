@@ -138,8 +138,8 @@ def play(global_inv):
     print_matrix(enc_m, rounding=True)
 
     # for debugging
-    # sol = solve_problem(ciphertext, enc_m)
-    # print sol
+    sol = solve_problem(ciphertext, enc_m)
+    print sol
 
     # user input loop
     cmd = ''
@@ -157,4 +157,4 @@ def play(global_inv):
     return win
 
 if __name__ == '__main__':
-    play()
+    play(inventory.Inventory())
