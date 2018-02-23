@@ -4,7 +4,6 @@ import inventory
 name = 'room 4'
 win = False
 
-passwords = "ketchup, mustard, ranch" #possible passwords for room
 message = False #variable to keep track of state of engine
 password = False #variable to keep track of state of computer password
 inv = inventory.Inventory() #generate a user inventory
@@ -88,8 +87,9 @@ def computer3():
         print " /  *************  \ "
         print "---------------------"
         print "Computer 3 seems to require a password." #if password has not yet been entered correctly, prompt user
+        print "Here's a riddle to help you: What is both a condiment and an instrument?" #print riddle
         passDecision = raw_input("Enter a password : ").strip() #keep prompting user to enter correct password if incorrect one is entered
-        if hashlib.sha256(passDecision.lower()).hexdigest().upper() == "A1D648CFFA6E2BA0F94C51F51E0CB8F2BE4FA6C3D227176016291F9CE64E90E7": #compare entered phrase to correct HASH-256 encoded phrase
+        if hashlib.sha256(passDecision.lower()).hexdigest().upper() == "2A3C68716E774FFFB2DEE83C066531C7DBAA13768AB49CAF07BC73A24B027053": #compare entered phrase to correct HASH-256 encoded phrase
             print "   _______________   "
             print "  |  ___________  |  "
             print "  | |           | |  "
@@ -117,8 +117,10 @@ def SOS():
         print "An SOS message has already been sent." #if SOS message has already been sent before, display filler message
     else:
         print "The ship's communication line with nearby ships has been opened."
-        print "A keycard is needed to send an SOS message."
+        print "A keycard is needed to send an SOS message.\n"
         if "keycard" in [item.name for item in inv.as_tuple()]: #if user has keycard in inventory, prompt to use the keycard to send SOS message
+            inv.print_inv() #print user inventory
+            print "\n"
             print " _____ "
             print "|\ ~ /|"
             print "|}}:{{|"
@@ -155,8 +157,10 @@ def door():
         print "| |           | | "
         print "| |           | | "
         print "|_|___________|_| "
-        print "There seems to be slot in the door that requires a USB."
+        print "There seems to be slot in the door that requires a USB.\n"
         if "USB" in [item.name for item in inv.as_tuple()]: #if user has USB in inventory, prompt to use USB to open door
+            inv.print_inv() #show user inventory
+            print "\n"
             print " _   ,--()"
             print "( )-'-.------|>"
             print " -     `--[]"
@@ -237,17 +241,14 @@ def cabinet_1(h=False, f=None):
         print "There seems to be a CD in Cabinet 1."
         cdDecision = raw_input("Would you like to put the CD into your inventory A)Yes B)No : ").strip() #prompt user to put CD into inventory
         if cdDecision.upper() == "A" or cdDecision.upper() == "YES":
-            if len(inv.as_tuple()) > 5:
-                print "Your inventory seems to be full." #if inventory has 5 items, do not put CD into inventory
-            else:
-                try:
-                    show_cabinet_1() #display items in cabinet 1
-                    index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
-                    tmp = cabinet1.drop_item(index) #drop item from cabinet 1
-                    assert tmp != inventory.NULL
-                    assert inv.pick_item(tmp) > 0 #pick up item into inventory
-                except:
-                     err('inventory error (invalid item to pick up)')
+            try:
+                show_cabinet_1() #display items in cabinet 1
+                index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
+                tmp = cabinet1.drop_item(index) #drop item from cabinet 1
+                assert tmp != inventory.NULL
+                assert inv.pick_item(tmp) > 0 #pick up item into inventory
+            except:
+                    err('inventory error (invalid item to pick up)')
 
 #function to access cabinet 2
 def cabinet_2(h=False, f=None):
@@ -268,17 +269,14 @@ def cabinet_2(h=False, f=None):
         print "There seems to be a keycard in Cabinet 2."
         kcDecision = raw_input("Would you like to put the keycard into your inventory A)Yes B)No : ").strip() #prompt user to put keycard into inventory
         if kcDecision.upper() == "A" or kcDecision.upper() == "YES":
-            if len(inv.as_tuple()) > 5:
-                print "Your inventory seems to be full." #if inventory has 5 items, do not put keycard into inventory
-            else:
-                try:
-                    show_cabinet_2() #display items in cabinet 2
-                    index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
-                    tmp = cabinet2.drop_item(index) #drop item from cabinet 2
-                    assert tmp != inventory.NULL
-                    assert inv.pick_item(tmp) > 0 #pick up item into inventory
-                except:
-                     err('inventory error (invalid item to pick up)')
+            try:
+                show_cabinet_2() #display items in cabinet 2
+                index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
+                tmp = cabinet2.drop_item(index) #drop item from cabinet 2
+                assert tmp != inventory.NULL
+                assert inv.pick_item(tmp) > 0 #pick up item into inventory
+            except:
+                    err('inventory error (invalid item to pick up)')
 
 #function to access cabinet 3
 def cabinet_3(h=False, f=None):
@@ -296,17 +294,14 @@ def cabinet_3(h=False, f=None):
         print "There seems to be a USB in Cabinet 3."
         usbbDecision = raw_input("Would you like to put the USB into your inventory A)Yes B)No : ").strip() #prompt user to put USB into inventory
         if usbbDecision.upper() == "A" or usbbDecision.upper() == "YES":
-            if len(inv.as_tuple()) > 5:
-                print "Your inventory seems to be full." #if inventory has 5 items, do not put hammer into inventory
-            else:
-                try:
-                    show_cabinet_3() #display items in cabinet 3
-                    index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
-                    tmp = cabinet3.drop_item(index) #drop item from cabinet 3
-                    assert tmp != inventory.NULL
-                    assert inv.pick_item(tmp) > 0 #pick up item into inventory
-                except:
-                     err('inventory error (invalid item to pick up)')
+            try:
+                show_cabinet_3() #display items in cabinet 3
+                index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
+                tmp = cabinet3.drop_item(index) #drop item from cabinet 3
+                assert tmp != inventory.NULL
+                assert inv.pick_item(tmp) > 0 #pick up item into inventory
+            except:
+                    err('inventory error (invalid item to pick up)')
 
 #function to display contents of user inv
 def showInv(h=False, f=None):
@@ -374,7 +369,7 @@ userDictionary = {'?': help, 'quit': bye, 'computer 1': computer1, 'computer 2':
 
 def play(global_inv):
     global inv
-    inb = global_inv
+    inv = global_inv
 
     #room 4 introduction and directions
     print "\nWelcome to room 4!\n"
@@ -399,4 +394,4 @@ def play(global_inv):
                 err('unrecognized input. try \'?\' for help') #show error message for unrecognized input
 
 if __name__ == '__main__':
-    play(inventory.Inventory())
+    play(inventory.Inventory()) #start playing
