@@ -112,7 +112,7 @@ logsDescriptions = {}
 
 passwordsGotten = False
 passwordsCommands = {}
-passwordsDescrptions{}
+passwordsDescrptions = {}
 
 print "\nWelcome to the second room!\n"
 print "="*80
