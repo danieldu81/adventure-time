@@ -141,8 +141,9 @@ def light_messages(): # Prints a random message when you have glowsticks
 
 def print_help():
     print 'W moves up, A moves left, S moves down, D moves right'
+    print 'M reveals the map of the room, but can only be used once the glowstick has been found'
     print 'Stumble around until you find the glowstick and then the key to the door'
-    print 'Press q to quit the program'
+    print 'Q quits the program, while ? brings up this help feature again'
 
 global room1
 room1 = Room()
@@ -164,6 +165,8 @@ print('You come to screaming about your Mommy, enclosed in a blanket of solid cr
         '\nyour legs stop feeling like jelly. A feeling of dread encompasses you and you look around, but the room is enshrouded in darkness. With' +
         '\na start you realize that something has gone terribly wrong. Before you can panic, your training kicks in. The first thing you need to do' +
         '\nis to find a light so you can make your next move...\n')
+        
+print_help()
 
 while glowFound == False:
     x, y, valid = move(x,y)
