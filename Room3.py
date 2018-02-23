@@ -124,6 +124,7 @@ def engine():
                 engDecision = raw_input("Would you like to use it on the engine A)Yes B)No : ").strip()
                 if engDecision.upper() == "A" or engDecision.upper() == "YES":
                     print "The ship's engine has been fixed." #fix engine if user agrees to use welder
+                    print "The ship has successfully been redirected."
                     engine = True
 
 #function to access door to next room
