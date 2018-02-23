@@ -12,21 +12,21 @@ class Room:
         self.room = []
     
     def build_room(self):
-        for x in range(0,5):
+        for x in range(0,3):
             for y in range(0,5):
                 if x==0 and y==4: # Location of the cryo chamber
                     temp = [x, y, "Cryo Chamber", "You can see blue liquid inside the cryo chamber.", False]
                     self.room.append(temp)
-                elif x==2 and y==2: # Location of the table
+                elif x==1 and y==2: # Location of the table
                     temp = [x, y, "Table", "There seems to be a table here.", False]
                     self.room.append(temp)
                 elif x==0 and y==1: # Location of the key
                     temp = [x, y, "Key", "There seems to be something on the wall...", True]
                     self.room.append(temp)
-                elif x==4 and y==3: # Location of the Glowstick
+                elif x==2 and y==3: # Location of the Glowstick
                     temp = [x, y, "Glowstick", "There seems to be a glowstick on the floor.", True]
                     self.room.append(temp)
-                elif x==2 and y==0: # Location of the door
+                elif x==1 and y==0: # Location of the door
                     temp = [x, y, "Door", "There seems to be a door in front of you.", True]
                     self.room.append(temp)   
                 else: # Empty space
@@ -34,14 +34,14 @@ class Room:
                     self.room.append(temp)
     def light_up(self):
         self.room[4][3] = 'The blue cryo gel shifts and rotates. It is very mesmerizing...'
-        self.room[12][3] = 'There is a metal table bolted to the floor. The table is clean.'
+        self.room[7][3] = 'There is a metal table bolted to the floor. The table is clean.'
         self.room[1][3] = 'You look up and see a key hanging on the wall.'
-        self.room[23][3] = ''
-        self.room[10][3] = 'There is a sliding door that seems to require a key to open...'
+        self.room[14][3] = ''
+        self.room[5][3] = 'There is a sliding door that seems to require a key to open...'
     
     def update(self):
         self.room[1][3] = ''
-        self.room[10][3] = 'You stand before the door.'
+        self.room[5][3] = 'You stand before the door.'
 
     def find_location(self, x, y): # Finds current location and item stored there (if any)
         for item in self.room:
@@ -67,7 +67,7 @@ def move_down(x,y): # Moves the character down
 def check_valid(x,y): # Checks to see if the move is valid
     if x<0:
         return x+1, y, False
-    elif x>4:
+    elif x>2:
         return x-1, y, False
     elif y>4:
         return x, y-1, False
@@ -134,13 +134,14 @@ while glowFound == False:
         current_loc = room1.find_location(x, y)
         if current_loc[2] != '':
             print current_loc[3]
-            if x==4 and y==3:
+            if x==2 and y==3:
                 glowFound = True
         else:
             dark_messages()
 print(' ____________________________\n(_(_________________________()')
 print('Hooray you found the glowstick!! \n\nThe room is lit up with an eerie green glow. At the other end of the room you see something hangning on the wall. You also see a door on' + 
-        '\none side of the room.')        
+        '\none side of the room.') 
+               
 while keyFound == False:
     room1.light_up()
     x, y, valid = move(x,y)
@@ -170,7 +171,8 @@ print(' _____________' +
    '\n     (   )' +
    '\n     /   \\' + 
    '\n     \___/')
-print('Hooray you found the key!! Head to the door to move on to the next room!') 
+print('Hooray you found the key!! Head to the door to move on to the next room!')
+ 
 while doorFound == False:
     room1.update()
     x, y, valid = move(x,y)
@@ -180,7 +182,7 @@ while doorFound == False:
         current_loc = room1.find_location(x, y)
         if current_loc[2] != '':
             print current_loc[3]
-            if x==2 and y==0:
+            if x==1 and y==0:
                 doorFound = True
         else:
             light_messages()
