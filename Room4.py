@@ -361,6 +361,7 @@ def help(h=False, f=None):
     print 'Available commands:' #print each command in userDictionary for user to use
     for key in userDictionary:
         print '  '+key
+    print 'you can get contextual help with <cmd>?'
 
 #dictionary containing commands and respective function calls
 userDictionary = {'?': help, 'quit': bye, 'computer 1': computer1, 'computer 2': computer2, 'computer 3': computer3,
