@@ -6,6 +6,9 @@ find a light source. Afterwords they can find a key and exit the dark room.
 '''
 import random, inventory
 
+name = 'room 1'
+win = False
+
 # Class that creates the entire room
 class Room:
     def __init__(self):
@@ -118,12 +121,11 @@ def move(x,y): # Allows the user to choose where they move to
         return x, y, True
     if z =='m' and glowFound == True:
         room1.print_map(x, y)
-        return x, y, True
+        return x, y, True    
     else:
         print("You currently do not have access to this feature.")
         return x, y, True
     
-
 def dark_messages(): # Prints a random message before obtaining glowsticks
     messages = ['You feel someone watching you...', 'The hair on the back of your neck prickles...',
     'Something does not feel right...', 'It is too quiet...', 'You trip and fall!', 'You stub your toe.']
@@ -172,7 +174,7 @@ while glowFound == False:
         else:
             dark_messages()
 print(' ____________________________\n(_(_________________________()')
-print('Hooray you found the glowstick!! \n\nThe room is lit up with an eerie green glow. At the other end of the room you see something hangning on the wall. You also see a door on' + 
+print('Hooray you found the glowstick!! \n\nThe room is lit up with an eerie green glow. At the other end of the room you see something hanging on the wall. You also see a door on' + 
         '\none side of the room.') 
                
 while keyFound == False:
