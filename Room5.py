@@ -45,6 +45,7 @@ atw_str = r'''
 atw_mcn = inventory.Inventory(max_len=5)
 
 # check the atwood machine
+win = False  # if the `win' flag is set, main.py is notified
 def solve_machine(h=False, f=None):
     if h:
         print 'Help entry for: '+f
@@ -66,7 +67,7 @@ def solve_machine(h=False, f=None):
         t_weight += w[1]
         assert t_weight == w[0]
         print 'your solution to the Atwood machine is correct'
-        print r'your flag: ezctf{f=ma}'
+        win = True
     except:
         print 'your solution to the Atwood machine is incorrect'
 
@@ -238,7 +239,11 @@ usr_dict = {
     'solve machine': solve_machine
 }
 
-def play():
+def play(global_inv):
+    # set file inventory to be global inventory
+    global inv
+    inv = global_inv
+
     # greet user and explain predicament
     print 'Welcome to room 5!\n'
     print ('In this room is a formidable problem: a complex Atwood\'s machine '
@@ -246,7 +251,7 @@ def play():
         'equilibrium. Assume that the downward acceleration on this space '
         'station just so happens to be 10 m/s^2.')
     print '\nYou can get help with the \'?\' command. Good luck!'
-    
+
     # user input prompt
     cmd = ''
     while cmd not in ['quit', 'leave', 'exit', 'q', 'X']:
@@ -259,6 +264,7 @@ def play():
                 usr_dict[cmd[:-1]](h=True, f=cmd[:-1])
             except:
                 err('unrecognized input. try \'?\' for help')
+    return win
 
 if __name__ == '__main__':
     play()

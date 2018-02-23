@@ -4,6 +4,8 @@ import numpy as np  # matrix math
 import string       # generate a random password for each session
 import hashlib      # for extra security, don't pass around password plaintext
 
+inv = inventory.Inventory()
+
 def print_matrix(mat, rounding=False, squeeze=False):
     # prints a matrix
     # if `rounding' is set, only round to the nearest int when printing
@@ -92,10 +94,12 @@ def solve_problem(ciphertext, enc_m):
     except:
         return ''
 
+win = False
 def check_sol(guess, real_pword_hash):
     # checks if a given solution is correct
     if hashlib.sha256(guess.strip()).hexdigest() == real_pword_hash:
         print 'Success!'
+        win = True
     else:
         print 'Nope.'
 
@@ -110,7 +114,10 @@ usr_dict = {
     'guess': check_sol
 }
 
-def play():
+def play(global_inv):
+    global inv
+    inv = global_inv
+
     # say hello and be nice to user
     print 'Welcome to room 7!\n'
     print ('You have reached the [escape] pod bay doors. Unfortunately, you '
@@ -147,6 +154,7 @@ def play():
                 usr_dict[a](b, pword_hash)
             except:
                 err('command not recognized')
+    return win
 
 if __name__ == '__main__':
     play()
