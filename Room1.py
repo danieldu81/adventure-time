@@ -4,7 +4,7 @@ This room is completely dark and the player must navigate in the dark till they
 find a light source. Afterwords they can find a key and exit the dark room.
 
 '''
-import random, inventory
+import random, sys
 
 name = 'room 1'
 win = False
@@ -97,7 +97,7 @@ def move(x,y): # Allows the user to choose where they move to
     y2 = -1
     z = ''
     valid = True
-    while z!='w' and z!='a' and z!='s' and z!='d' and z!= '?' and z!= 'm':
+    while z!='w' and z!='a' and z!='s' and z!='d' and z!= '?' and z!= 'm' and z!='q':
         z = raw_input("Where would you like to go? Use WASD to navigate through the room : ")
         z = z.lower()
     if z=='w':
@@ -119,6 +119,8 @@ def move(x,y): # Allows the user to choose where they move to
     if z =='?':
         print_help()
         return x, y, True
+    if z=='q':
+        sys.exit()
     if z =='m' and glowFound == True:
         room1.print_map(x, y)
         return x, y, True    
@@ -138,7 +140,9 @@ def light_messages(): # Prints a random message when you have glowsticks
     print messages[x]
 
 def print_help():
-    print 'Help'
+    print 'W moves up, A moves left, S moves down, D moves right'
+    print 'Stumble around until you find the glowstick and then the key to the door'
+    print 'Press q to quit the program'
 
 global room1
 room1 = Room()
