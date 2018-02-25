@@ -5,53 +5,235 @@ This room contains an AI named JEFF who seeks to kill the user.
 '''
 
 import inventory
+import hashlib
 
 # room metadata
 name = 'room 6'
 win = False
 
-# user inventory object
+# user and room inventory objects
 inv = inventory.Inventory()
+room_items = inventory.Inventory()
+
+# sha256 hash of the 'special object' name, so the casual user looking at the
+# source code still doesn't know what the item is
+item_hash = 'be0c96b17d8481575fa72aee2fe75c42f269bfb893012fcaffb561583ba07827'
 
 def err(text):
     print 'room 6 : error : %s' % text
 
-def try_item(args):
-    # if an argument was given, try that item:
+def print_help(name):
+    print 'Help entry for function: %s' % name
+
+def help_func(args, helpmode=False, alias=None):
+    if helpmode:
+        print_help(alias)
+        print '  the help function'
+        print '  can be invoked alone for a list of available commands'
+        print '  can also be invoked contextually for more precise help'
+        print '  examples'
+        print '    try?  # prints the help entry for the <try> function'
+        print '    ??  # prints the help entry for the <?> function'
+        print '    ?  # provides a list of available commands'
+        return
+    print 'available commands:'
+    for i in usr_dict:
+        print '  %s' % i
+    print 'for contextual help, use <func>?'
+
+def try_item(args, helpmode=False, alias=None):
+    if helpmode:
+        print_help(alias)
+        print '  use an item in your inventory'
+        print '  attempt to make use of an item to destroy JEFF'
+        print '  when you use an item, one of three things can happen:'
+        print '    1. the item is invalid and an error occurs'
+        print '    2. the item cannot destroy JEFF, and you lose it forever'
+        print '    3. the item successfully destroys JEFF but cannot be reused'
+        print '  this function can be invoked either with a list of items'
+        print '  or interactively'
+        print '  examples:'
+        print '    %s banana starfruit  # try the banana and starfruit' % alias
+        print '    %s  # interactively try an item from your inventory' % alias
+        return
+    def use(i):
+        print 'trying to use the \'%s\' to combat JEFF...' % i
+        if i not in [item.name for item in inv.as_tuple()]:
+            print ('Ah! Surely thou art not a liar? O deceitful player, '
+                   'use not that which belongeth not unto thee, lest '
+                   'thou invoke the wrath of JEFF upon thyself! Heed this '
+                   'warning, else live not to regret it.')
+        else:
+            index = [item.name for item in inv.as_tuple()].index(i)
+            inv.drop_item(index)
+            if hashlib.sha256(i).hexdigest() == item_hash:
+                print 'Success! You have destoryed JEFF with your %s!' % i
+                global win
+                win = True
+                return
+            else:
+                print ('Alas! Vainly hast thou ventur\'d! For three days '
+                       'and three nights thou did\'st strive, yet on the '
+                       'fourth day JEFF prevailed mightily. Behold! Thine '
+                       '\'%s\' hath been torn asunder and cannot be used '
+                       'again! If thou be brave, make thee another '
+                       'attempt.') % i
+
+    # if an argument(s) was given, try that item:
     if len(args) > 0:
-        pass
-    
+        for i in args:
+            use(i)
+
     # otherwise, allow the user to interactively select an item
     else:
-        print 'Current inventory state:\n'
-        inv.print_inv()
+        try:
+            print 'Current inventory state:\n'
+            inv.print_inv()
+            index = int(raw_input('room 6 : use item at index => '))
+            assert index >= 0 and index < len(inv.as_tuple())
+            use(inv.as_tuple()[index].name)
+        except:
+            err('try : invalid item to try on JEFF')
 
-def bye(args):
+def show_inv(args, helpmode=False, alias=None):
+    if helpmode:
+        print_help(alias)
+        print '  the display function'
+        print '  shows the current status of a collection of objects'
+        print '  there are two valid arguments: <room> and <inv>'
+        return
+    if len(args) != 1:
+        err('command `show\' takes exactly one argument')
+        return
+    global inv
+    global room_items
+    try:
+        inventory = {'inv': inv, 'room': room_items}[args[0]]
+        if len(inventory.as_tuple()) == 0:
+            print '[empty]'
+        else:
+            inventory.print_inv()
+    except:
+        err('show : unrecognized argument')
+
+def pick_item(args, helpmode=False, alias=None):
+    if helpmode:
+        print_help(alias)
+        print '  the pick up function'
+        print '  picks up an item from the room into the user inventory'
+        print '  can be invoked with a list of item(s) to pick up'
+        print '  can also be invoked interactively by supplying no arguments'
+        print '  examples:'
+        print '    pick kiwi  # pick up the <kiwi> item'
+        print '    pick  # interactively select an item to pick up'
+        return
+    def pick(i):
+        print 'attempting to pick up item \'%s\'' % i
+        if i not in [item.name for item in room_items.as_tuple()]:
+            err('pick : item \''+i+'\' not found in room')
+        else:
+            index = [item.name for item in room_items.as_tuple()].index(i)
+            try:
+                tmp = room_items.drop_item(index)
+                assert tmp != inventory.NULL
+                assert inv.pick_item(tmp) > 0
+                print 'successfully picked up item \'%s\'' % i
+            except:
+                err('inventory error : cannot pick specified item')
+    if len(args) > 0:
+        for i in args:
+            pick(i)
+    else:
+        try:
+            print 'Current state of room:'
+            room_items.print_inv()
+            index = int(raw_input('room 6 : pick up at [room] index => '))
+            assert index >= 0 and index < len(room_items.as_tuple())
+            pick(room_items.as_tuple()[index].name)
+        except:
+            err('inventory error : invalid item to pick up')
+
+def drop_item(args, helpmode=False, alias=None):
+    if helpmode:
+        print_help(alias)
+        print '  drops an item from the user inventory into the room'
+        print '  can be invoked with an argument list or interactively'
+        print '  examples:'
+        print '    %s apple pear  # drops the <apple> and <pear> items' % alias
+        print '    %s  # interactively drop items'
+        return
+    global inv
+    global room_items
+    if len(inv.as_tuple()) < 1:
+        err('drop : no items to drop')
+        return
+    def drop(i):
+        print 'attempting to drop item \'%s\'' % i
+        if i not in [item.name for item in inv.as_tuple()]:
+            err('drop : item \''+i+'\' not found in user inventory')
+        else:
+            index = [item.name for item in room_items.as_tuple()].index(i)
+            try:
+                tmp = inv.drop_item(index)
+                assert tmp != inventory.NULL
+                assert room_items.pick_item(tmp) > 0
+            except:
+                err('inventory error : invalid item to drop')
+    if len(args) > 0:
+        for i in args:
+            drop(i)
+    else:
+        try:
+            'Current state of user inventory:'
+            inv.show_inv()
+            index = int(raw_input('room 6 : drop at [inventory] index => '))
+            assert index >= 0 and index < len(inv.as_tuple())
+            drop(inv.as_tuple()[index].name)
+        except:
+            err('inventory error : invalid item to drop')
+
+def bye(args, helpmode=False, alias=None):
+    if helpmode:
+        print_help(alias)
+        print '  exits the room'
+        return
     pass  # purposely left empty---exit is handled in loop
 
 usr_dict = {
+    '?': help_func,
     'try': try_item,
+    'show': show_inv,
+    'pick': pick_item,
+    'drop': drop_item,
     'q': bye
 }
 
 def play(global_inv):
     global inv
     inv = global_inv
-    
+
+    # for testing, init the room with some random items
+    inv.pick_item(inventory.Item('apple'))
+    inv.pick_item(inventory.Item('crowbar'))
+    room_items.pick_item(inventory.Item('chinaman'))
+
     # greet player
     print 'Welcome to room 6!\n'
     print ('This room houses the artificial intelligence known as the '
-            'Janitorial Entity for Fighting Foreigners (JEFF). As the name '
-            'might suggest, JEFF\'s primary purpose is to protect the ship '
-            'from invaders. However, due to your accelerated awakening, it '
-            'believe you to be an intruder! Please exterminate JEFF before it '
-            'exterminates you.\n')
-    
-    # give a special message if the user has the crowbar
-    if 'crowbar' in [item.name for item in inv.as_tuple()]:
-        print 'I see you have a crowbar...'
-        print 'Of course, brute force is NEVER the right solution...NEVER...'
-    
+           'Janitorial Entity for Fighting Foreigners (JEFF). As the name '
+           'might suggest, JEFF\'s primary purpose is to protect the ship '
+           'from invaders. However, due to your accelerated awakening, it '
+           'believe you to be an intruder! Please exterminate JEFF before it '
+           'exterminates you.\n')
+    print 'Hint: try using one of the items in your backpack to help...\n'
+
+    # give a special message if the user has the *special thing*
+    for item in inv.as_tuple():
+        if hashlib.sha256(item.name).hexdigest() == item_hash:
+           print 'I see you have an item called \'%s\'...' % item.name
+           print 'You know, brute force is NEVER the right solution...NEVER...'
+           break
+
     # user input loop
     cmd = ''
     while cmd not in ['q', 'quit']:
@@ -60,8 +242,13 @@ def play(global_inv):
         try:
             usr_dict[cmd](raw_in[1:])
         except:
-            err('unrecognized command')
-        
+            try:
+                # is command <func>?
+                assert cmd[-1] == '?'
+                usr_dict[cmd[:-1]](raw_in[1:], helpmode=True, alias=cmd[:-1])
+            except:
+                err('unrecognized command')
+
 
 if __name__ == '__main__':
     play(inventory.Inventory())

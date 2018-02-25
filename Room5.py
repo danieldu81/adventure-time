@@ -93,11 +93,15 @@ water_pistol = inventory.Item('water pistol',
 glasses = inventory.Item('glasses',
                     description='useful apparatus',
                     weight=1)
+crowbar = inventory.Item('crowbar',
+                    description='brute force is never the solution',
+                    weight=2)
 room_items.pick_item(axe)
 room_items.pick_item(sword)
 room_items.pick_item(rail_gun)
 room_items.pick_item(water_pistol)
 room_items.pick_item(glasses)
+room_items.pick_item(crowbar)
 
 def show_room_items(h=False, f=None):
     if h:

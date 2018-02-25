@@ -63,6 +63,10 @@ class Inventory:
     def print_inv(self):
         # prints inventory
         # returns the number of items printed
+        if self.max_len > 0:
+            print 'MAX INVENTORY LENGTH: %d' % self.max_len
+        if self.max_weight > 0:
+            print 'MAX TOTAL WEIGHT: %d' % self.max_weight
         print 'index :             name : weight : ( description )'
         print '==================================='
         for i, item in enumerate(self.items):
