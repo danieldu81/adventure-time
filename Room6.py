@@ -68,6 +68,7 @@ def try_item(args, helpmode=False, alias=None):
             inv.drop_item(index)
             if hashlib.sha256(i).hexdigest() == item_hash:
                 print 'Success! You have destroyed JEFF with your %s!' % i
+                print 'You can now leave this room and proceed on your quest.'
                 global win
                 win = True
                 return

@@ -101,6 +101,7 @@ def check_sol(guess, real_pword_hash):
     # checks if a given solution is correct
     if hashlib.sha256(guess.strip()).hexdigest() == real_pword_hash:
         print 'Success!'
+        print 'You may now leave the room in peace with the \'q\' command.'
         global win
         win = True
     else:
