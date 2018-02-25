@@ -202,7 +202,7 @@ def bye(args, helpmode=False, alias=None):
 usr_dict = {
     '?': help_func,
     'try': try_item,
-    'show inv': show_inv,
+    'show': show_inv,
     'pick': pick_item,
     'drop': drop_item,
     'q': bye
