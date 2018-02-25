@@ -145,7 +145,21 @@ def passwords(h=False, f=None): # Function for the password directory
       error('Unrecognized input. Try \'?\' for help\n')
 
 def display(h=False, f=None): # Function for passwords file
-  print("PASSWORDS!")
+  passwords = ['ketchup', 'mustard', 'hot sauce', 'mayo', 'soy sauce', 'hot sauce', 'barbeque sauce', 'sour cream', 'relish', 'wasabi', 'vinegar', 'chutney', 'salsa', 'sriracha', 'blue cheese']
+  random.shuffle(passwords)
+  line = ''
+  count = 1
+  for word in passwords:
+    if count == 1 or count == 6 or count == 11:
+      line += word
+    elif count == 5 or count == 10 or count == 15:
+      line += '   ' + word
+      print line
+      line = ''
+    else:
+      line += '   ' + word
+    count += 1
+  print
   
 def listPasswords(h=False, f=None): # Function that lists commands in the passwords directory
   for key in passwordsCommands:
@@ -177,7 +191,7 @@ logsCommands = {'log1': logOne, 'log2': logTwo, 'log3': logThree, 'cd ..': end, 
 logsDescriptions = {'log1   ': 'Log from 1/1/20XX', 'log2   ': 'Log from 7/30/20XX\n', 'log3   ': 'Log from 10/20/20XX', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory'}
 
 passwordsCommands = {'show': display, 'cd ..': end, 'compgen': listPasswords, '?': helpPasswords}
-passwordsDescriptions = {'show   ': 'Displays all passwords in a random order\n', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory'}
+passwordsDescriptions = {'show   ': 'Displays a list of possible passwords used in the game.\n', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory'}
 
 def play(global_inv):
     # this room also does not require the global inventory
