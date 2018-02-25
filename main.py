@@ -39,7 +39,11 @@ print("Get ready for a FANTASTIC adventure! Your adventure will start in...")
     time.sleep(1)
     print i'''
 
-print("\nThe year is 20XX. Your name is Zeev from planet Penseev and currently you are hurtling 65 km/s towards an unknown planet.As one of the few survivors of the human race, it is your responsibility to travel from planet to planet in the hopes of finding a new home for your people. Unbeknownst to you, the ship has malfunctioned and as a result you have been woken up early from your cryosleep...\n\n")
+print("\nThe year is 20XX. Your name is Zeev from planet Penseev and currently you are hurtling 65 km/s towards an unknown planet." 
+" As one of the few survivors of the human race, it is your responsibility to travel from planet to planet in the hopes of finding a new home for your people."
+" However, the ship and its AI JEFF do not know that you have survived, which would cause JEFF to attack you as a foreign entity if it sees you." 
+" Clear all of the rooms, defeat JEFF, and escape to the escape pods as fast as you can.\n\n" 
+"Now, you have been woken up early from your cryosleep...\n\n")
 
 print '='*80
 
