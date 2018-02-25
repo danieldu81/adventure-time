@@ -44,18 +44,14 @@ def mainframe(): # Function for the main directory of the computer
   while cmd not in ['quit']:
       cmd = raw_input('admin@solaris: ~$ ').strip() #strip user input of whitespace
       try:
-          commands[cmd]() #see if the command is in the dictionary
+          if commands[cmd]() == 0:
+              return
       except:
-          try:
-              assert cmd[-1] == '?' #see if command is <func>?
-              commands[cmd[:-1]](h=True, f=cmd[:-1])
-          except:
-              error('Unrecognized input. Try \'?\' for help\n') #show error message for unrecognized input
+          error('Unrecognized input. Try \'?\' for help') #show error message for unrecognized input
 
-def commands(h=False, f=None): # Function that lists commands in main directory
+def listCommands(h=False, f=None): # Function that lists commands in main directory
   for key in commands:
     print '  '+key
-  print
   
 def help(h=False, f=None): # Function that provides help in the main directory
   for key in descriptions:
@@ -69,22 +65,22 @@ def grid(h=False, f=None): # Function for the grid directory
     try:
       gridCommands[input]() 
       if input == "cd ..":
-        mainframe()
+        return 1
     except:
       error('Unrecognized input. Try \'?\' for help\n')
+  return 0
 
 def onGrid(h=False, f=None): # Program that turns on lights
   global lightsOn
   if lightsOn == False:
-    print("Lights are turned on.\n")
+    print("Lights are turned on.")
     lightsOn = True
   else:
-    print("Lights are already on.\n")
+    print("Lights are already on.")
 
 def listGrid(h=False, f=None): # Function that lists commands in the grid directory
   for key in gridCommands:
     print '  '+key
-  print
   
 def helpGrid(h=False, f=None): # Function that provides help in the grid directory
   for key in gridDescriptions:
@@ -101,32 +97,32 @@ def logs(h=False, f=None): # Function for the logs directory
     try:
       logsCommands[input]() 
       if input == "cd ..":
-        mainframe()
+        return 1
     except:
-      error('Unrecognized input. Try \'?\' for help\n')
-
+      error('Unrecognized input. Try \'?\' for help')
+  return 0
+  
 def logOne(h=False, f=None): # Log one document
   global seenOne
   seenOne = True
-  log = "Ship's log, 1/1/20XX. The USS Chanas has begun her year long journey towards\nPlanet Joprao located on the far edges of the solar system. With no surviving\npassengers on board, full control has been given to entity JEFF, the\nresiding captain of the ship. JEFF is hoping to land upon Joprao and establish a\ncolony before making contact with the rest of the fleet. End log.\n"
+  log = "Ship's log, 1/1/20XX. The USS Chanas has begun her year long journey towards\nPlanet Joprao located on the far edges of the solar system. With no surviving\npassengers on board, full control has been given to entity JEFF, the\nresiding captain of the ship. JEFF is hoping to land upon Joprao and establish a\ncolony before making contact with the rest of the fleet. End log."
   print log
 
 def logTwo(h=False, f=None): # Log two document
   global seenTwo
   seenTwo = True
-  log = "Ship's log, 7/30/20XX. The USS Chanas has just begun superspeed travel.\nConfirmation for superspeed was recieved from the fleet commander at 13:00.\nThere will be no more communication with the fleet until a colony is established\non Joprao. Within the next five months, Planet Joprao will be in sight. End log.\n"
+  log = "Ship's log, 7/30/20XX. The USS Chanas has just begun superspeed travel.\nConfirmation for superspeed was recieved from the fleet commander at 13:00.\nThere will be no more communication with the fleet until a colony is established\non Joprao. Within the next five months, Planet Joprao will be in sight. End log."
   print log
   
 def logThree(h=False, f=None): # Log three document
   global seenThree
   seenThree = True
-  log = "Ship's log, 10/20/20XX. Today was a very exciting day. JEFF discovered a bug in\nthe UPS (Universal Positioning System) code that may have adjusted the course of\nthe ship. The course has been updated after this slight detour. The ship will\nmake the jump to superspeed later in the week. On top of that a rogue entity was\ndiscovered within one of the cryo chambers. JEFF is taking all precautions to\nprevent the entity from damaging the ship. End log.\n"
+  log = "Ship's log, 10/20/20XX. Today was a very exciting day. JEFF discovered a bug in\nthe UPS (Universal Positioning System) code that may have adjusted the course of\nthe ship. The course has been updated after this slight detour. The ship will\nmake the jump to superspeed later in the week. On top of that a rogue entity was\ndiscovered within one of the cryo chambers. JEFF is taking all precautions to\nprevent the entity from damaging the ship. End log."
   print log
   
 def listLogs(h=False, f=None): # Function that lists commands in the logs directory
   for key in logsCommands:
     print '  '+key
-  print
 
 def helpLogs(h=False, f=None): # Function that provides help in the logs directory
   for key in logsDescriptions:
@@ -140,12 +136,14 @@ def passwords(h=False, f=None): # Function for the password directory
     try:
       passwordsCommands[input]() 
       if input == "cd ..":
-        mainframe()
+        return 1
     except:
-      error('Unrecognized input. Try \'?\' for help\n')
+      error('Unrecognized input. Try \'?\' for help')
+  return 0
 
 def display(h=False, f=None): # Function for passwords file
-  passwords = ['ketchup', 'mustard', 'hot sauce', 'mayo', 'soy sauce', 'hot sauce', 'barbeque sauce', 'sour cream', 'relish', 'wasabi', 'vinegar', 'chutney', 'salsa', 'sriracha', 'blue cheese']
+  global passwordsGotten
+  passwords = ['ketchup', 'mustard', 'hotsauce', 'mayo', 'soysauce', 'hotsauce', 'barbequesauce', 'sourcream', 'relish', 'wasabi', 'vinegar', 'chutney', 'salsa', 'sriracha', 'bluecheese']
   random.shuffle(passwords)
   line = ''
   count = 1
@@ -159,12 +157,11 @@ def display(h=False, f=None): # Function for passwords file
     else:
       line += '   ' + word
     count += 1
-  print
-  
+  passwordsGotten = True
+    
 def listPasswords(h=False, f=None): # Function that lists commands in the passwords directory
   for key in passwordsCommands:
     print '  '+key
-  print
 
 def helpPasswords(h=False, f=None): # Function that proivdes help in the passwords directory
   for key in passwordsDescriptions:
@@ -181,17 +178,17 @@ def error(text):
     print(text)
     
 # Dictionaries
-commands = {'cd grid': grid, 'cd logs': logs, 'cd passwords': passwords, 'quit': quit, '?': help, 'compgen': commands}
-descriptions = {'quit   ': 'Quits the program', 'compgen': 'Lists all commands/directories', 'cd passwords': 'Takes you to password directory\n', 'cd grid': 'Takes you to the power grid directory', 'cd logs': 'Takes you to the logs directory'}
+commands = {'cd grid': grid, 'cd logs': logs, 'cd passwords': passwords, 'quit': quit, '?': help, 'compgen -b': listCommands}
+descriptions = {'quit   ': 'Quits the program', 'compgen -b': 'Lists all commands/directories', 'cd passwords': 'Takes you to password directory\n', 'cd grid': 'Takes you to the power grid directory', 'cd logs': 'Takes you to the logs directory'}
 
-gridCommands = {'power on': onGrid, 'cd ..': back, 'compgen': listGrid, '?': helpGrid, 'quit': quit,}
-gridDescriptions = {'power on': 'Turns on the lights', 'compgen': 'Lists all commands\n', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
+gridCommands = {'power on': onGrid, 'cd ..': back, 'compgen -b': listGrid, '?': helpGrid, 'quit': quit,}
+gridDescriptions = {'power on': 'Turns on the lights', 'compgen -b': 'Lists all commands\n', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
 
-logsCommands = {'log1': logOne, 'log2': logTwo, 'log3': logThree, 'cd ..': back, 'compgen': listLogs, '?':helpLogs, 'quit': quit,}
-logsDescriptions = {'log1   ': 'Log from 1/1/20XX', 'log2   ': 'Log from 7/30/20XX\n', 'log3   ': 'Log from 10/20/20XX', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
+logsCommands = {'cat log1': logOne, 'cat log2': logTwo, 'cat log3': logThree, 'cd ..': back, 'compgen -b': listLogs, '?':helpLogs, 'quit': quit,}
+logsDescriptions = {'log1   ': 'Log from 1/1/20XX', 'log2   ': 'Log from 7/30/20XX\n', 'log3   ': 'Log from 10/20/20XX', 'compgen -b': 'Lists all commands', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
 
-passwordsCommands = {'show': display, 'cd ..': back, 'compgen': listPasswords, '?': helpPasswords, 'quit': quit,}
-passwordsDescriptions = {'show   ': 'Displays a list of possible passwords used in the game.\n', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
+passwordsCommands = {'show': display, 'cd ..': back, 'compgen -b': listPasswords, '?': helpPasswords, 'quit': quit,}
+passwordsDescriptions = {'show   ': 'Displays a list of possible passwords used in the game.\n', 'compgen -b': 'Lists all commands', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
 
 def play(global_inv):
     # This room also does not require the global inventory
@@ -202,11 +199,11 @@ def play(global_inv):
     print "="*80
     print "\nYou can get help with the \'?\' command. Good luck!"
 
-    time.sleep(10)
+    #time.sleep(10)
     print("\n\nEnter a valid administrator password: ")
-    time.sleep(2.5)
+    #time.sleep(2.5)
     print("\nYou do not know the administrator password. You look around the room and your\neyes glance over a poster on the wall.")
-    time.sleep(1.5)
+    #time.sleep(1.5)
     show_password()
 
     password = ''
@@ -214,14 +211,11 @@ def play(global_inv):
     while(password != 'password'):
       password = raw_input("Invalid. Please enter a valid administrator password: ")
 
-    print("The computer comes to life. You seem to recall that typing 'compgen' lists all\nthe possible commands.\n")
+    print("The computer comes to life. You seem to recall that typing 'compgen -b' lists all\nthe possible commands.")
     mainframe()
     
-    if (lightsOn==True and logsSeen==True and passwordsGotten==True and analysisRun==True):
+    if (lightsOn==True and logsSeen==True and passwordsGotten==True):
         print("With a start the computer screen goes black. You attempt to turn on the computer, but nothing happens. You sit in silence wondering what your next move is. All of a sudden the loudspeaker turns on and a robotic voice says, \"Intruder alert. Intruder alert. All foreign objects will be destroyed. Initiating lockdown sequence.\"\ns")
-    else:
-        print("You have not finished examining the computer!\n")
-        mainframe()
         
 if __name__ == '__main__':
     play(inventory.Inventory())
