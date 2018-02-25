@@ -248,7 +248,7 @@ def play(global_inv):
                 usr_dict[cmd[:-1]](raw_in[1:], helpmode=True, alias=cmd[:-1])
             except:
                 err('unrecognized command')
-
+    return win
 
 if __name__ == '__main__':
     play(inventory.Inventory())
