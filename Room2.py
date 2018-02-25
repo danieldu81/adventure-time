@@ -3,7 +3,7 @@
 This room is completely empty except for a massive computer located in the middle of the room. The user will go to the computer and manipulate the code to turn on all lights, run a ship analysis, analyze the ship's logs, and gains passwords for the remainder of the room.
 
 '''
-import time, inventory
+import time, inventory, random
 
 # room metedata for main.py
 name = 'room 2'
@@ -174,7 +174,7 @@ def helpPasswords(h=False, f=None): # Function that proivdes help in the passwor
 def quit(h=False, f=None): # Function that exits the computer
   pass
 
-def end(h=False, f=None): # Function that pushes the user back a directory
+def back(h=False, f=None): # Function that pushes the user back a directory
   pass
 
 def error(text):
@@ -184,17 +184,17 @@ def error(text):
 commands = {'cd grid': grid, 'cd logs': logs, 'cd passwords': passwords, 'quit': quit, '?': help, 'compgen': commands}
 descriptions = {'quit   ': 'Quits the program', 'compgen': 'Lists all commands/directories', 'cd passwords': 'Takes you to password directory\n', 'cd grid': 'Takes you to the power grid directory', 'cd logs': 'Takes you to the logs directory'}
 
-gridCommands = {'power on': onGrid, 'cd ..': end, 'compgen': listGrid, '?': helpGrid}
-gridDescriptions = {'power on': 'Turns on the lights', 'compgen': 'Lists all commands\n', 'cd ..  ': 'Go back a directory'}
+gridCommands = {'power on': onGrid, 'cd ..': back, 'compgen': listGrid, '?': helpGrid, 'quit': quit,}
+gridDescriptions = {'power on': 'Turns on the lights', 'compgen': 'Lists all commands\n', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
 
-logsCommands = {'log1': logOne, 'log2': logTwo, 'log3': logThree, 'cd ..': end, 'compgen': listLogs, '?':helpLogs}
-logsDescriptions = {'log1   ': 'Log from 1/1/20XX', 'log2   ': 'Log from 7/30/20XX\n', 'log3   ': 'Log from 10/20/20XX', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory'}
+logsCommands = {'log1': logOne, 'log2': logTwo, 'log3': logThree, 'cd ..': back, 'compgen': listLogs, '?':helpLogs, 'quit': quit,}
+logsDescriptions = {'log1   ': 'Log from 1/1/20XX', 'log2   ': 'Log from 7/30/20XX\n', 'log3   ': 'Log from 10/20/20XX', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
 
-passwordsCommands = {'show': display, 'cd ..': end, 'compgen': listPasswords, '?': helpPasswords}
-passwordsDescriptions = {'show   ': 'Displays a list of possible passwords used in the game.\n', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory'}
+passwordsCommands = {'show': display, 'cd ..': back, 'compgen': listPasswords, '?': helpPasswords, 'quit': quit,}
+passwordsDescriptions = {'show   ': 'Displays a list of possible passwords used in the game.\n', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
 
 def play(global_inv):
-    # this room also does not require the global inventory
+    # This room also does not require the global inventory
     print "\nWelcome to the second room!\n"
     print "="*80
     print "You make your way to the server room."
@@ -218,7 +218,7 @@ def play(global_inv):
     mainframe()
     
     if (lightsOn==True and logsSeen==True and passwordsGotten==True and analysisRun==True):
-        pass
+        print("With a start the computer screen goes black. You attempt to turn on the computer, but nothing happens. You sit in silence wondering what your next move is. All of a sudden the loudspeaker turns on and a robotic voice says, \"Intruder alert. Intruder alert. All foreign objects will be destroyed. Initiating lockdown sequence.\"\ns")
     else:
         print("You have not finished examining the computer!\n")
         mainframe()
