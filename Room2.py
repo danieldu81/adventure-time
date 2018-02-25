@@ -11,13 +11,12 @@ win = False
 
 # Variables
 lightsOn = False
-analysisRun = False
 seenOne = False
 seenTwo = False
 seenThree = False
-logsSeen = False
 passwordsGotten = False
-
+data = False
+canExit = False
 
 def show_password():
   text = r'''
@@ -89,8 +88,6 @@ def helpGrid(h=False, f=None): # Function that provides help in the grid directo
 
 def logs(h=False, f=None): # Function for the logs directory
   global seenOne, seenTwo, seenThree, logsSeen
-  if seenOne == True and seenTwo == True and seenThree == True:
-    logsSeen == True
   input = ''
   while input not in ['quit']:
     input = raw_input('admin@solaris:/logs ~$ ').strip() 
@@ -176,6 +173,15 @@ def back(h=False, f=None): # Function that pushes the user back a directory
 
 def error(text):
     print(text)
+
+def exitRoom():
+    global data
+    if data == True:
+        print("You get out of the chair and head towards the door. Congratulations on completing room two!")
+        return True
+    else:
+        print("You attempt to get out of the chair, but you cannot seem to.")
+        return False
     
 # Dictionaries
 commands = {'cd grid': grid, 'cd logs': logs, 'cd passwords': passwords, 'quit': quit, '?': help, 'compgen -b': listCommands}
@@ -214,8 +220,30 @@ def play(global_inv):
     print("The computer comes to life. You seem to recall that typing 'compgen -b' lists all\nthe possible commands.")
     mainframe()
     
-    if (lightsOn==True and logsSeen==True and passwordsGotten==True):
-        print("With a start the computer screen goes black. You attempt to turn on the computer, but nothing happens. You sit in silence wondering what your next move is. All of a sudden the loudspeaker turns on and a robotic voice says, \"Intruder alert. Intruder alert. All foreign objects will be destroyed. Initiating lockdown sequence.\"\ns")
+    if (lightsOn==True and seenOne==True and seenTwo==True and seenThree==True and passwordsGotten==True):
+        print("With a start the computer screen goes black. You attempt to turn on the computer,\nbut nothing happens. You sit in silence wondering what your next move is. All of a\bsudden the loudspeaker turns on and a robotic voice says, \"Intruder alert.\nIntruder alert. All foreign objects will be destroyed. Initiating lockdown\nsequence.\"")
+        global data
+        data = True
+        
+    while win == False:
+        canExit = exitRoom()
+        if canExit == True:
+            global win
+            win = True
+            break
+        else:
+            password = ''
+            password = raw_input("Enter a valid administrator password: ")
+            while(password != 'password'):
+                password = raw_input("Invalid. Please enter a valid administrator password: ")
+        
+            print("The computer comes to life. You seem to recall that typing 'compgen -b' lists all\nthe possible commands.")
+            mainframe()
+            
+            if (lightsOn==True and seenOne==True and seenTwo==True and seenThree==True and passwordsGotten==True):
+                print("With a start the computer screen goes black. You attempt to turn on the computer,\nbut nothing happens. You sit in silence wondering what your next move is. All of a\bsudden the loudspeaker turns on and a robotic voice says, \"Intruder alert.\nIntruder alert. All foreign objects will be destroyed. Initiating lockdown\nsequence.\"")
+                global data
+                data = True    
         
 if __name__ == '__main__':
     play(inventory.Inventory())
