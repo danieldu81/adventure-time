@@ -1,8 +1,8 @@
-''' room5.py
+''' Room5.py
 
 This room contains 5 pressure plates. The player must correctly place 5 items
-from his inventory onto the 5 pressure plates to balance an Atwood's machine and
-proceed to the next stage.
+from his inventory onto the 5 pressure plates to balance an Atwood's machine
+and proceed to the next stage.
 
 '''
 import inventory
@@ -53,14 +53,14 @@ atw_str = r'''
 # SETUP ROOM #
 ##############
 
-# the actual values of the machine are stored in an Inventory object of length 5
+# the actual values of the machine are stored in an Inventory object
 atw_mcn = inventory.Inventory(max_len=5)
 
 # initialize Atwood machine with dummy masses
 for i in range(1, atw_mcn.max_len+1):
-    name = str(i)+' kg'
-    atw_mcn.pick_item(inventory.Item(name,
-                                     description='a '+name+' mass',
+    n = str(i)+' kg'
+    atw_mcn.pick_item(inventory.Item(n,
+                                     description='a '+n+' mass',
                                      weight=i))
 
 # the room's environment can hold unlimited items
@@ -333,8 +333,8 @@ def play(global_inv):
     # greet user and explain predicament
     print 'Welcome to room 5!\n'
     print ('In this room is a formidable problem: a complex Atwood\'s machine '
-        ' that requires five weights to be correctly used to put the system in '
-        'equilibrium. Assume that the downward acceleration on this space '
+        'that requires five weights to be correctly used to put the system '
+        'in equilibrium. Assume that the downward acceleration on this space '
         'station just so happens to be 10 m/s^2.')
     print '\nYou can get help with the \'?\' command. Good luck!'
 

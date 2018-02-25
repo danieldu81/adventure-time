@@ -3,7 +3,11 @@
 This room is completely empty except for a massive computer located in the middle of the room. The user will go to the computer and manipulate the code to turn on all lights, run a ship analysis, analyze the ship's logs, and gains passwords for the remainder of the room.
 
 '''
-import time
+import time, inventory
+
+# room metedata for main.py
+name = 'room 2'
+win = False
 
 # Variables
 lightsOn = False
@@ -17,17 +21,17 @@ passwordsGotten = False
 
 def show_password():
   text = r'''
-   ____   ____  _____ _____ __    __   ___   ____   ___       
-  |    \ /    |/ ___// ___/|  |__|  | /   \ |    \ |   \   __ 
+   ____   ____  _____ _____ __    __   ___   ____   ___
+  |    \ /    |/ ___// ___/|  |__|  | /   \ |    \ |   \   __
   |  o  )  o  (   \_(   \_ |  |  |  ||     ||  D  )|    \ |  |
   |   _/|     |\__  |\__  ||  |  |  ||  O  ||    / |  D  ||__|
-  |  |  |  _  |/  \ |/  \ ||  `  '  ||     ||    \ |     | __ 
+  |  |  |  _  |/  \ |/  \ ||  `  '  ||     ||    \ |     | __
   |  |  |  |  |\    |\    | \      / |     ||  .  \|     ||  |
   |__|  |__|__| \___| \___|  \_/\_/   \___/ |__|\_||_____||__|
-                                                              
-                       ____   ____  _____ _____ __    __   ___   ____   ___   
-                      |    \ /    |/ ___// ___/|  |__|  | /   \ |    \ |   \  
-                      |  o  )  o  (   \_(   \_ |  |  |  ||     ||  D  )|    \ 
+
+                       ____   ____  _____ _____ __    __   ___   ____   ___
+                      |    \ /    |/ ___// ___/|  |__|  | /   \ |    \ |   \
+                      |  o  )  o  (   \_(   \_ |  |  |  ||     ||  D  )|    \
                       |   _/|     |\__  |\__  ||  |  |  ||  O  ||    / |  D  |
                       |  |  |  _  |/  \ |/  \ ||  `  '  ||     ||    \ |     |
                       |  |  |  |  |\    |\    | \      / |     ||  .  \|     |
@@ -53,9 +57,9 @@ def mainframe():
 def grid(h=False, f=None):
   input = ''
   while input not in ['quit']:
-    input = raw_input('admin@solaris:/grid ~$ ').strip() 
+    input = raw_input('admin@solaris:/grid ~$ ').strip()
     try:
-      gridCommands[input]() 
+      gridCommands[input]()
       if input == "cd ..":
         mainframe()
     except:
@@ -73,14 +77,14 @@ def listGrid(h=False, f=None):
   for key in gridCommands:
     print '  '+key
   print
-  
+
 def helpGrid(h=False, f=None):
   for key in gridDescriptions:
     print '  '+key+"\t\t"+gridDescriptions[key]
 
 def end(h=False, f=None):
   pass
-  
+
 
 def logs(h=False, f=None):
   global seenOne, seenTwo, seenThree, logsSeen
@@ -88,9 +92,9 @@ def logs(h=False, f=None):
     logsSeen == True
   input = ''
   while input not in ['quit']:
-    input = raw_input('admin@solaris:/logs ~$ ').strip() 
+    input = raw_input('admin@solaris:/logs ~$ ').strip()
     try:
-      logsCommands[input]() 
+      logsCommands[input]()
       if input == "cd ..":
         mainframe()
     except:
@@ -105,12 +109,12 @@ def logTwo(h=False, f=None):
   global seenTwo
   seenTwo = True
   print("Log Two")
-  
+
 def logThree(h=False, f=None):
   global seenThree
   seenThree = True
   print("Log Three")
-  
+
 def listLogs(h=False, f=None):
   for key in logsCommands:
     print '  '+key
@@ -124,9 +128,9 @@ def helpLogs(h=False, f=None):
 def passwords(h=False, f=None):
   input = ''
   while input not in ['quit']:
-    input = raw_input('admin@solaris:/passwords ~$ ').strip() 
+    input = raw_input('admin@solaris:/passwords ~$ ').strip()
     try:
-      passwordsCommands[input]() 
+      passwordsCommands[input]()
       if input == "cd ..":
         mainframe()
     except:
@@ -134,11 +138,13 @@ def passwords(h=False, f=None):
 
 def display(h=False, f=None):
   print("PASSWORDS!")
-  
+
 def listPasswords(h=False, f=None):
   for key in passwordsCommands:
     print '  '+key
-  print
+  # print  # I assume this line is incomplete
+  global win
+  win = True
 
 def helpPasswords(h=False, f=None):
   for key in passwordsDescriptions:
@@ -148,10 +154,10 @@ def commands(h=False, f=None):
   for key in commands:
     print '  '+key
   print
-  
+
 def quit(h=False, f=None):
   pass
-  
+
 def help(h=False, f=None):
   for key in descriptions:
     print '  '+key+"\t\t"+descriptions[key]
@@ -172,24 +178,29 @@ logsDescriptions = {'log1   ': 'Log from 1/1/20XX', 'log2   ': 'Log from 7/30/20
 passwordsCommands = {'show': display, 'cd ..': end, 'compgen': listPasswords, '?': helpPasswords}
 passwordsDescriptions = {'show   ': 'Displays all passwords in a random order\n', 'compgen': 'Lists all commands', 'cd ..  ': 'Go back a directory'}
 
-print "\nWelcome to the second room!\n"
-print "="*80
-print "You make your way to the server room."
-print "In front of you is a massive computer that takes up the entirety of the room. At\none end is the door you came through, and at the other is the door out. The\nblinking lights coming from the command console hypnotize you and draw you\ntowards them. You walk towards the console and turn the computer on. With a \npurr, the computer comes to life. However before you can proceed, a password is \nrequired to access the programs written on the computer."
-print "="*80
-print "\nYou can get help with the \'?\' command. Good luck!"
+def play(global_inv):
+    # this room also does not require the global inventory
+    print "\nWelcome to the second room!\n"
+    print "="*80
+    print "You make your way to the server room."
+    print "In front of you is a massive computer that takes up the entirety of the room. At\none end is the door you came through, and at the other is the door out. The\nblinking lights coming from the command console hypnotize you and draw you\ntowards them. You walk towards the console and turn the computer on. With a \npurr, the computer comes to life. However before you can proceed, a password is \nrequired to access the programs written on the computer."
+    print "="*80
+    print "\nYou can get help with the \'?\' command. Good luck!"
 
-#time.sleep(10)
-print("\n\nEnter a valid administrator password: ")
-#time.sleep(2.5)
-print("\nYou do not know the administrator password. You look around the room and your\neyes glance over a poster on the wall.")
-#time.sleep(1.5)
-show_password()
+    #time.sleep(10)
+    print("\n\nEnter a valid administrator password: ")
+    #time.sleep(2.5)
+    print("\nYou do not know the administrator password. You look around the room and your\neyes glance over a poster on the wall.")
+    #time.sleep(1.5)
+    show_password()
 
-password = ''
-password = raw_input("Enter a valid administrator password: ")
-while(password != 'password'):
-  password = raw_input("Invalid. Please enter a valid administrator password: ")
+    password = ''
+    password = raw_input("Enter a valid administrator password: ")
+    while(password != 'password'):
+      password = raw_input("Invalid. Please enter a valid administrator password: ")
 
-print("The computer comes to life. You seem to recall that typing 'compgen' lists all\nthe possible commands.\n")
-mainframe()
+    print("The computer comes to life. You seem to recall that typing 'compgen' lists all\nthe possible commands.\n")
+    mainframe()
+
+if __name__ == '__main__':
+    play(inventory.Inventory())

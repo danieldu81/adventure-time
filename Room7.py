@@ -112,7 +112,8 @@ def err(text):
 def leave():
     pass
 
-#function to display commands in order to help user understand how to use program
+# function to display commands in order to help user understand how to use
+# program
 def help(h=False, f=None):
     if h:
         print 'Help entry for: '+f
@@ -123,7 +124,7 @@ def help(h=False, f=None):
         print '      ?'
         print '      guess?'
         return
-    print 'Available commands:' #print each command in usr_dict for user to use
+    print 'Available commands:' # print each command in usr_dict
     for key in usr_dict:
         print '  '+key
 
@@ -144,7 +145,9 @@ def play(global_inv):
             'Luckily, you recognize the encryption on the door...the password '
             'is encrypted as a matrix, and you know the encoding matrix! '
             'Invert the matrix to find the password and escape the spaceship!')
-    print '\nHint: The character encoding is ASCII (in order to guess one must type \'guess \' and then the ASCII sequence '
+    print '\nHint: The character encoding is ASCII.'
+    print '      You can make a guess by supplying your guess to the \'guess\''
+    print '        command.'
     print 'Okay, I guess you can use a TI-nspire if you REALLY want...\n'
 
     # randomly and securely generate the problem
