@@ -67,7 +67,7 @@ def try_item(args, helpmode=False, alias=None):
             index = [item.name for item in inv.as_tuple()].index(i)
             inv.drop_item(index)
             if hashlib.sha256(i).hexdigest() == item_hash:
-                print 'Success! You have destoryed JEFF with your %s!' % i
+                print 'Success! You have destroyed JEFF with your %s!' % i
                 global win
                 win = True
                 return
