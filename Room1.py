@@ -120,7 +120,7 @@ def move(x,y): # Allows the user to choose where they move to
         print_help()
         return x, y, True
     if z=='q':
-        sys.exit()
+        return 'no', 'no', 'no'
     if z =='m' and glowFound == True:
         room1.print_map(x, y)
         return x, y, True
@@ -131,8 +131,7 @@ def move(x,y): # Allows the user to choose where they move to
 def dark_messages(): # Prints a random message before obtaining glowsticks
     messages = ['You feel someone watching you...', 'The hair on the back of your neck prickles...',
     'Something does not feel right...', 'It is too quiet...', 'You trip and fall!', 'You stub your toe.']
-    x = random.randint(0,5)
-    print messages[x]
+    print random.choice(messages)
 
 def light_messages(): # Prints a random message when you have glowsticks
     messages = ['Time is a-ticking...', 'The room looks so much better in the light!']
@@ -146,6 +145,16 @@ def print_help():
     print 'Q quits the program, while ? brings up this help feature again'
 
 def play(global_inv):
+    # if the user has already won the game, don't do anything
+    global win
+    if win == True:
+        print '\n'+'='*80
+        print 'You have already illuminated this room and found the door.'
+        print 'There is nothing more for you here.'
+        print 'Now go in peace back whence you came.'
+        print '='*80+'\n'
+        return
+
     # this room does not need to do anything with the inventory
     global room1
     room1 = Room()
@@ -172,6 +181,8 @@ def play(global_inv):
 
     while glowFound == False:
         x, y, valid = move(x,y)
+        if x == 'no' and y == 'no' and valid == 'no':
+            return
         if valid == False:
             print("There is a wall in your way.")
         else:
@@ -189,6 +200,8 @@ def play(global_inv):
     while keyFound == False:
         room1.light_up()
         x, y, valid = move(x,y)
+        if x == 'no' and y == 'no' and valid == 'no':
+            return
         if valid == False:
             print("There is a wall in your way.")
         else:
@@ -220,6 +233,8 @@ def play(global_inv):
     while doorFound == False:
         room1.update()
         x, y, valid = move(x,y)
+        if x == 'no' and y == 'no' and valid == 'no':
+            return
         if valid == False:
             print("There is a wall in your way.")
         else:
@@ -245,7 +260,6 @@ def play(global_inv):
         "\n  \   /    .'-\ ||////|| /-`.    \   /" +
         "\n   '-'---------'-'----'-'---------'-'")
     print("Congratulations on completing the first room!")
-    global win
     win = True
 
 if __name__ == '__main__':
