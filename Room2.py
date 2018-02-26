@@ -197,53 +197,61 @@ passwordsCommands = {'show': display, 'cd ..': back, 'compgen -b': listPasswords
 passwordsDescriptions = {'show   ': 'Displays a list of possible passwords used in the game.\n', 'compgen -b': 'Lists all commands', 'cd ..  ': 'Go back a directory', 'quit   ': 'Quits the program'}
 
 def play(global_inv):
-    # This room also does not require the global inventory
-    print "\nWelcome to the second room!\n"
-    print "="*80
-    print "You make your way to the server room."
-    print "In front of you is a massive computer that takes up the entirety of the room. At\none end is the door you came through, and at the other is the door out. The\nblinking lights coming from the command console hypnotize you and draw you\ntowards them. You walk towards the console and turn the computer on. With a \npurr, the computer comes to life. However before you can proceed, a password is \nrequired to access the programs written on the computer."
-    print "="*80
-    print "\nYou can get help with the \'?\' command. Good luck!"
-
-    #time.sleep(10)
-    print("\n\nEnter a valid administrator password: ")
-    #time.sleep(2.5)
-    print("\nYou do not know the administrator password. You look around the room and your\neyes glance over a poster on the wall.")
-    #time.sleep(1.5)
-    show_password()
-
-    password = ''
-    password = raw_input("Enter a valid administrator password: ")
-    while(password != 'password'):
-      password = raw_input("Invalid. Please enter a valid administrator password: ")
-
-    print("The computer comes to life. You seem to recall that typing 'compgen -b' lists all\nthe possible commands.")
-    mainframe()
+    # This room also does not require the global inventory and if the room has been completed, nothing can be done in this room
+    global win
+    if win == True:
+        print'\n' + '='*80
+        print 'You have already learned everything you can from this room.'
+        print 'There is nothing more for you here.'
+        print 'Now go in peace'
+        print'\n' + '='*80
+    else:
+        print "\nWelcome to the second room!\n"
+        print "="*80
+        print "You make your way to the server room."
+        print "In front of you is a massive computer that takes up the entirety of the room. At\none end is the door you came through, and at the other is the door out. The\nblinking lights coming from the command console hypnotize you and draw you\ntowards them. You walk towards the console and turn the computer on. With a \npurr, the computer comes to life. However before you can proceed, a password is \nrequired to access the programs written on the computer."
+        print "="*80
+        print "\nYou can get help with the \'?\' command. Good luck!"
     
-    if (lightsOn==True and seenOne==True and seenTwo==True and seenThree==True and passwordsGotten==True):
-        print("With a start the computer screen goes black. You attempt to turn on the computer,\nbut nothing happens. You sit in silence wondering what your next move is. All of a\bsudden the loudspeaker turns on and a robotic voice says, \"Intruder alert.\nIntruder alert. All foreign objects will be destroyed. Initiating lockdown\nsequence.\"")
-        global data
-        data = True
+        #time.sleep(10)
+        print("\n\nEnter a valid administrator password: ")
+        #time.sleep(2.5)
+        print("\nYou do not know the administrator password. You look around the room and your\neyes glance over a poster on the wall.")
+        #time.sleep(1.5)
+        show_password()
+    
+        password = ''
+        password = raw_input("Enter a valid administrator password: ")
+        while(password != 'password'):
+            password = raw_input("Invalid. Please enter a valid administrator password: ")
+    
+        print("The computer comes to life. You seem to recall that typing 'compgen -b' lists all\nthe possible commands.")
+        mainframe()
         
-    while win == False:
-        canExit = exitRoom()
-        if canExit == True:
-            global win
-            win = True
-            break
-        else:
-            password = ''
-            password = raw_input("Enter a valid administrator password: ")
-            while(password != 'password'):
-                password = raw_input("Invalid. Please enter a valid administrator password: ")
-        
-            print("The computer comes to life. You seem to recall that typing 'compgen -b' lists all\nthe possible commands.")
-            mainframe()
+        if (lightsOn==True and seenOne==True and seenTwo==True and seenThree==True and passwordsGotten==True):
+            print("With a start the computer screen goes black. You attempt to turn on the computer,\nbut nothing happens. You sit in silence wondering what your next move is. All of a\bsudden the loudspeaker turns on and a robotic voice says, \"Intruder alert.\nIntruder alert. All foreign objects will be destroyed. Initiating lockdown\nsequence.\"")
+            global data
+            data = True
             
-            if (lightsOn==True and seenOne==True and seenTwo==True and seenThree==True and passwordsGotten==True):
-                print("With a start the computer screen goes black. You attempt to turn on the computer,\nbut nothing happens. You sit in silence wondering what your next move is. All of a\bsudden the loudspeaker turns on and a robotic voice says, \"Intruder alert.\nIntruder alert. All foreign objects will be destroyed. Initiating lockdown\nsequence.\"")
-                global data
-                data = True    
+        while win == False:
+            canExit = exitRoom()
+            if canExit == True:
+                global win
+                win = True
+                break
+            else:
+                password = ''
+                password = raw_input("Enter a valid administrator password: ")
+                while(password != 'password'):
+                    password = raw_input("Invalid. Please enter a valid administrator password: ")
+            
+                print("The computer comes to life. You seem to recall that typing 'compgen -b' lists all\nthe possible commands.")
+                mainframe()
+                
+                if (lightsOn==True and seenOne==True and seenTwo==True and seenThree==True and passwordsGotten==True):
+                    print("With a start the computer screen goes black. You attempt to turn on the computer,\nbut nothing happens. You sit in silence wondering what your next move is. All of a\bsudden the loudspeaker turns on and a robotic voice says, \"Intruder alert.\nIntruder alert. All foreign objects will be destroyed. Initiating lockdown\nsequence.\"")
+                    global data
+                    data = True    
         
 if __name__ == '__main__':
     play(inventory.Inventory())
