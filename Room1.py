@@ -14,7 +14,7 @@ class Room:
     def __init__(self):
         self.room = []
 
-    def build_room(self):
+    def build_room(self): # Builds the room as a list of list
         for x in range(0,3):
             for y in range(0,5):
                 if x==0 and y==4: # Location of the cryo chamber
@@ -35,14 +35,15 @@ class Room:
                 else: # Empty space
                     temp = [x, y, '', '', True]
                     self.room.append(temp)
-    def light_up(self):
+                    
+    def light_up(self): # Modifies the room after the glowstick is found
         self.room[4][3] = 'The blue cryo gel shifts and rotates. It is very mesmerizing...'
         self.room[7][3] = 'There is a metal table bolted to the floor. The table is clean.'
         self.room[1][3] = 'You look up and see a key hanging on the wall.'
         self.room[13][3] = ''
         self.room[5][3] = 'There is a sliding door that seems to require a key to open...'
 
-    def update(self):
+    def update(self): # Modifies the room after the key is found
         self.room[1][3] = ''
         self.room[5][3] = 'You stand before the door.'
 
@@ -51,7 +52,7 @@ class Room:
             if x==item[0] and y==item[1]:
                 return item
 
-    def print_map(self, x, y):
+    def print_map(self, x, y): # Prints the map of the room, once the glowstick is found
         grid = ''
         for y2 in range(0, 5):
             grid = grid + '+---+---+---+\n|'
@@ -169,14 +170,15 @@ def play(global_inv):
     glowFound = False
     keyFound = False
     doorFound = False
-
+    
+    print'\n' + '='*80
     print('You come to screaming about your Mommy, enclosed in a blanket of solid cryogenic gel. With a start you remember who and where you are,' +
             '\nand you begin to wonder why you were woken up. With a quiet *hiss* the cryogenic chamber opens up and you stumble to the ground. Your' +
             '\nvision blurs and as you struggle to stand up, you notice that the ship is entirely silent. After a few minutes your vision clears and' +
             '\nyour legs stop feeling like jelly. A feeling of dread encompasses you and you look around, but the room is enshrouded in darkness. With' +
             '\na start you realize that something has gone terribly wrong. Before you can panic, your training kicks in. The first thing you need to do' +
             '\nis to find a light so you can make your next move...\n')
-
+    print'\n' + '='*80
     print_help()
 
     while glowFound == False:
