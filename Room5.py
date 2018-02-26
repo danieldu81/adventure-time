@@ -58,7 +58,7 @@ atw_mcn = inventory.Inventory(max_len=5)
 
 # initialize Atwood machine with dummy masses
 for i in range(1, atw_mcn.max_len+1):
-    n = str(i)+' kg'
+    n = str(i)+'_kg'
     atw_mcn.pick_item(inventory.Item(n,
                                      description='a '+n+' mass',
                                      weight=i))
@@ -169,8 +169,10 @@ def wrap_inv_pick(args, h=False, f=None):
     if len(room_items.as_tuple()) < 1:
         err('no items to pick up')
         return
-    if len(inv.as_tuple()) + len(args) > inv.max_len:
+    if len(inv.as_tuple()) + len(args) > inv.max_len and inv.max_len > 0:
         err('not enough space in inventory')
+        print len(inv.as_tuple())
+        print len(args)
         return
     if len(args) > 0:
         for i in args:
@@ -300,16 +302,13 @@ def place_items(args, h=False, f=None):
                 assert index >= 0 and index < len(inv.as_tuple())
                 tmp = inv.drop_item(index)
                 assert tmp != inventory.NULL
+                room_items.pick_item(atw_items[i])
                 assert atw_mcn.pick_item(tmp) > 0
             except:
                 # if a dropping error occurs, replace the machine item with
                 # the item originally there, so the index is not messed up
                 err('inventory error : invalid item at index')
                 atw_mcn.pick_item(atw_items[i])
-
-        # flush remaining items dropped from machine into room
-        for item in atw_items:
-            room_items.pick_item(item)
         return
 # dict exposing funcs to user by mapping user command strings to funcs
 usr_dict = {

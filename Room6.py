@@ -150,7 +150,7 @@ def pick_item(args, helpmode=False, alias=None):
         print '    pick kiwi  # pick up the <kiwi> item'
         print '    pick  # interactively select an item to pick up'
         return
-    if len(inv.as_tuple()) + len(args) > inv.max_len:
+    if len(inv.as_tuple()) + len(args) > inv.max_len and inv.max_len > 0:
         err('not enough space in inventory')
         return
     def pick(i):
