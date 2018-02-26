@@ -87,7 +87,7 @@ def to_room():
             if current_room != 0:
                 return -1
             else:
-                print 'you area already at the first room'
+                print 'you are already at the first room'
                 move = ''
         elif move == 'r':
             return 0
