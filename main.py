@@ -111,9 +111,11 @@ def list_rooms():
             current = '<- current room'
         print '%s : %s %s' % (r.name, status, current)
 
-while not Room7.win:
+while Room7.win == False:
     # user play loop
     rooms[current_room].play(inv)
+    if Room7.win:  # needed to prevent listing to happen even when game is won
+        break
     list_rooms()
     current_room += to_room()
 

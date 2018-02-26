@@ -108,9 +108,13 @@ def check_sol(guess, real_pword_hash):
         print 'Nope.'
 
 def err(text):
+    # format error text
     print 'room7 : error : %s' % text
 
-def leave():
+def leave(h=False, f=None):
+    if h:
+        print 'Help entry for: '+f
+        print '      leaves the room'
     pass
 
 # function to display commands in order to help user understand how to use
@@ -140,12 +144,14 @@ def play(global_inv):
     inv = global_inv
 
     # say hello and be nice to user
+    print '\n'+'='*80
     print 'Welcome to room 7!\n'
     print ('You have reached the [escape] pod bay doors. Unfortunately, you '
             'just destroyed the AI, so there is no one to open the door. '
             'Luckily, you recognize the encryption on the door...the password '
             'is encrypted as a matrix, and you know the encoding matrix! '
             'Invert the matrix to find the password and escape the spaceship!')
+    print '='*80+'\n'
     print '\nHint: The character encoding is ASCII.'
     print '      You can make a guess by supplying your guess to the \'guess\''
     print '        command.'
@@ -171,13 +177,29 @@ def play(global_inv):
         try:
             usr_dict[cmd]()
         except:
+            if cmd == 'guess?':
+                # hardcode this because it's easier and there are few functions
+                print 'Help manual entry for: guess'
+                print '      guess a password for the escape pod'
+                print '   example:'
+                print '      guess password123'
+                continue
+            if cmd == '??':
+                print 'Help manual entry for: ?'
+                print '      help function'
+                print '      when invoked alone, it shows available commands'
+                print '      when invoked with a function, it is contextual'
+                continue
+            if cmd == 'q?':
+                print 'Help manual entry for : q'
+                print '      leaves the room'
+                continue
             try:
                 # is command `guess <pass>'?
                 a, b = cmd.strip().split(' ')
                 usr_dict[a](b, pword_hash)
             except:
                 err('command not recognized')
-    return win
 
 if __name__ == '__main__':
     play(inventory.Inventory())

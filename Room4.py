@@ -242,6 +242,7 @@ def cabinet_1(h=False, f=None):
         cdDecision = raw_input("Would you like to put the CD into your inventory A)Yes B)No : ").strip() #prompt user to put CD into inventory
         if cdDecision.upper() == "A" or cdDecision.upper() == "YES":
             try:
+                assert len(inv.as_tuple()) < inv.max_len
                 show_cabinet_1() #display items in cabinet 1
                 index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
                 tmp = cabinet1.drop_item(index) #drop item from cabinet 1
@@ -270,6 +271,7 @@ def cabinet_2(h=False, f=None):
         kcDecision = raw_input("Would you like to put the keycard into your inventory A)Yes B)No : ").strip() #prompt user to put keycard into inventory
         if kcDecision.upper() == "A" or kcDecision.upper() == "YES":
             try:
+                assert len(inv.as_tuple()) < inv.max_len
                 show_cabinet_2() #display items in cabinet 2
                 index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
                 tmp = cabinet2.drop_item(index) #drop item from cabinet 2
@@ -295,6 +297,7 @@ def cabinet_3(h=False, f=None):
         usbbDecision = raw_input("Would you like to put the USB into your inventory A)Yes B)No : ").strip() #prompt user to put USB into inventory
         if usbbDecision.upper() == "A" or usbbDecision.upper() == "YES":
             try:
+                assert len(inv.as_tuple()) < inv.max_len
                 show_cabinet_3() #display items in cabinet 3
                 index = int(raw_input('room 4 : pick up at [room] index => ').strip()) #prompt user to choose item at index
                 tmp = cabinet3.drop_item(index) #drop item from cabinet 3
@@ -373,6 +376,7 @@ def play(global_inv):
     inv = global_inv
 
     #room 4 introduction and directions
+    print '\n'+'='*80
     print "\nWelcome to room 4!\n"
     print "="*80
     print "You have entered the command center."
@@ -380,6 +384,9 @@ def play(global_inv):
     print "correct password into the matching computer. Then, send an SOS to nearby ships using a keycard."
     print "="*80
     print "\nYou can get help with the \'?\' command. Good luck!"
+    print '='*80+'\n'
+    print 'Friendly warning: this room has a lot of computers and cables.'
+    print 'If you were to drop a small object, it might get lost forever...'
 
     #user input prompt/commands
     global cmd

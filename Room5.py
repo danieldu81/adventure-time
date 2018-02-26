@@ -169,20 +169,23 @@ def wrap_inv_pick(args, h=False, f=None):
     if len(room_items.as_tuple()) < 1:
         err('no items to pick up')
         return
+    if len(inv.as_tuple()) + len(args) == inv.max_len:
+        err('not enough space in inventory')
+        return
     if len(args) > 0:
         for i in args:
             if i not in [item.name for item in room_items.as_tuple()]:
                 err('item \''+i+'\' not found in the room')
                 continue
             index = [item.name for item in room_items.as_tuple()].index(i)
+            tmp = room_items.drop_item(index)
             try:
-                assert index >= 0 and index < len(room_items.as_tuple())
-                tmp = room_items.drop_item(index)
                 assert tmp != inventory.NULL
                 assert inv.pick_item(tmp) > 0
                 print 'picked up item \'%s\' into user inventory' % i
             except:
                 err('unable to pick up item \''+i+'\'')
+                room_items.pick_item(tmp)  # put dropped item back in room
         return
     try:
         show_inv(['room'])  # guaranteed to work here, so no need to catch
@@ -331,12 +334,14 @@ def play(global_inv):
     inv = global_inv
 
     # greet user and explain predicament
+    print '\n'+'='*80
     print 'Welcome to room 5!\n'
     print ('In this room is a formidable problem: a complex Atwood\'s machine '
         'that requires five weights to be correctly used to put the system '
         'in equilibrium. Assume that the downward acceleration on this space '
         'station just so happens to be 10 m/s^2.')
     print '\nYou can get help with the \'?\' command. Good luck!'
+    print '='*80+'\n'
 
     # user input prompt
     cmd = ''

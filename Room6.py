@@ -15,17 +15,35 @@ win = False
 inv = inventory.Inventory()
 room_items = inventory.Inventory()
 
+# init the room with some potentially useful items
+room_items.pick_item(inventory.Item('apple',
+                             description='keeps doctors away', weight=1))
+room_items.pick_item(inventory.Item('banana',
+                             description='monkey like', weight=1))
+room_items.pick_item(inventory.Item('orange',
+                             description='not to be compared to apple',
+                             weight=1))
+room_items.pick_item(inventory.Item('chestnut',
+                             description='a solid road in Holmdel, NJ',
+                             weight=1))
+room_items.pick_item(inventory.Item('penguin',
+                             description='tux, is that you?', weight=3))
+
 # sha256 hash of the 'special object' name, so the casual user looking at the
 # source code still doesn't know what the item is
 item_hash = 'be0c96b17d8481575fa72aee2fe75c42f269bfb893012fcaffb561583ba07827'
 
 def err(text):
+    # format error messages consistently
     print 'room 6 : error : %s' % text
 
 def print_help(name):
+    # print man pages consistently
     print 'Help entry for function: %s' % name
 
 def help_func(args, helpmode=False, alias=None):
+    # shows help text to user
+    # can be global or contextual
     if helpmode:
         print_help(alias)
         print '  the help function'
@@ -42,6 +60,7 @@ def help_func(args, helpmode=False, alias=None):
     print 'for contextual help, use <func>?'
 
 def try_item(args, helpmode=False, alias=None):
+    # attempts to use an item(s) on JEFF
     if helpmode:
         print_help(alias)
         print '  use an item in your inventory'
@@ -56,6 +75,7 @@ def try_item(args, helpmode=False, alias=None):
         print '    %s banana starfruit  # try the banana and starfruit' % alias
         print '    %s  # interactively try an item from your inventory' % alias
         return
+
     def use(i):
         print 'trying to use the \'%s\' to combat JEFF...' % i
         if i not in [item.name for item in inv.as_tuple()]:
@@ -97,6 +117,7 @@ def try_item(args, helpmode=False, alias=None):
             err('try : invalid item to try on JEFF')
 
 def show_inv(args, helpmode=False, alias=None):
+    # show either user inventory or room items
     if helpmode:
         print_help(alias)
         print '  the display function'
@@ -118,6 +139,7 @@ def show_inv(args, helpmode=False, alias=None):
         err('show : unrecognized argument')
 
 def pick_item(args, helpmode=False, alias=None):
+    # picks up an item from room to user inventory
     if helpmode:
         print_help(alias)
         print '  the pick up function'
@@ -128,19 +150,24 @@ def pick_item(args, helpmode=False, alias=None):
         print '    pick kiwi  # pick up the <kiwi> item'
         print '    pick  # interactively select an item to pick up'
         return
+    if len(inv.as_tuple()) + len(args) == inv.max_len:
+        err('not enough space in inventory')
+        return
     def pick(i):
         print 'attempting to pick up item \'%s\'' % i
         if i not in [item.name for item in room_items.as_tuple()]:
             err('pick : item \''+i+'\' not found in room')
         else:
             index = [item.name for item in room_items.as_tuple()].index(i)
+            tmp = room_items.drop_item(index)
             try:
-                tmp = room_items.drop_item(index)
                 assert tmp != inventory.NULL
                 assert inv.pick_item(tmp) > 0
                 print 'successfully picked up item \'%s\'' % i
             except:
                 err('inventory error : cannot pick specified item')
+                # if we fail, don't forget to put tmp back in the room
+                room_items.pick_item(tmp)
     if len(args) > 0:
         for i in args:
             pick(i)
@@ -155,6 +182,7 @@ def pick_item(args, helpmode=False, alias=None):
             err('inventory error : invalid item to pick up')
 
 def drop_item(args, helpmode=False, alias=None):
+    # drop item from user inventory to room
     if helpmode:
         print_help(alias)
         print '  drops an item from the user inventory into the room'
@@ -194,6 +222,7 @@ def drop_item(args, helpmode=False, alias=None):
             err('inventory error : invalid item to drop')
 
 def bye(args, helpmode=False, alias=None):
+    # leaves---implemented in user input loop
     if helpmode:
         print_help(alias)
         print '  exits the room'
@@ -213,12 +242,8 @@ def play(global_inv):
     global inv
     inv = global_inv
 
-    # for testing, init the room with some random items
-    inv.pick_item(inventory.Item('apple'))
-    inv.pick_item(inventory.Item('crowbar'))
-    room_items.pick_item(inventory.Item('chinaman'))
-
     # greet player
+    print '\n'+'='*80
     print 'Welcome to room 6!\n'
     print ('This room houses the artificial intelligence known as the '
            'Janitorial Entity for Fighting Foreigners (JEFF). As the name '
@@ -226,6 +251,7 @@ def play(global_inv):
            'from invaders. However, due to your accelerated awakening, it '
            'believe you to be an intruder! Please exterminate JEFF before it '
            'exterminates you.\n')
+    print '='*80+'\n'
     print 'Hint: try using one of the items in your backpack to help...\n'
 
     # give a special message if the user has the *special thing*

@@ -233,6 +233,7 @@ def cabinet_1(h=False, f=None):
         welderDecision = raw_input("Would you like to put the welder into your inventory A)Yes B)No : ").strip() #prompt user to put welder into inventory
         if welderDecision.upper() == "A" or welderDecision.upper() == "YES":
             try:
+                assert len(inv.as_tuple()) < inv.max_len
                 show_cabinet_1() #display items in cabinet 1
                 index = int(raw_input('room 3 : pick up at [room] index => ').strip()) #prompt user to choose item at index
                 tmp = cabinet1.drop_item(index) #drop item from cabinet 1
@@ -260,6 +261,7 @@ def cabinet_2(h=False, f=None):
         hammerDecision = raw_input("Would you like to put the hammer into your inventory A)Yes B)No : ").strip() #prompt user to put hammer into inventory
         if hammerDecision.upper() == "A" or hammerDecision.upper() == "YES":
             try:
+                assert len(inv.as_tuple()) < inv.max_len
                 show_cabinet_2() #display items in cabinet 2
                 index = int(raw_input('room 3 : pick up at [room] index => ').strip()) #prompt user to choose item at index
                 tmp = cabinet2.drop_item(index) #drop item from cabinet 2
@@ -287,6 +289,7 @@ def cabinet_3(h=False, f=None):
         wrenchDecision = raw_input("Would you like to put the wrench into your inventory A)Yes B)No : ").strip() #prompt user to put wrench into inventory
         if wrenchDecision.upper() == "A" or wrenchDecision.upper() == "YES":
             try:
+                assert len(inv.as_tuple()) < inv.max_len
                 show_cabinet_3() #display items in cabinet 3
                 index = int(raw_input('room 3 : pick up at [room] index => ').strip()) #prompt user to choose item at index
                 tmp = cabinet3.drop_item(index) #drop item from cabinet 3
