@@ -181,7 +181,7 @@ def play(global_inv):
     print'\n' + '='*80
     print_help()
 
-    while glowFound == False:
+    while glowFound == False: # Code runs until you find the glowstick
         x, y, valid = move(x,y)
         if x == 'no' and y == 'no' and valid == 'no':
             return
@@ -199,7 +199,7 @@ def play(global_inv):
     print('Hooray you found the glowstick!! \n\nThe room is lit up with an eerie green glow. At the other end of the room you see something hanging on the wall. You also see a door on' +
             '\none side of the room.')
 
-    while keyFound == False:
+    while keyFound == False: # Code runs until you find the key
         room1.light_up()
         x, y, valid = move(x,y)
         if x == 'no' and y == 'no' and valid == 'no':
@@ -232,7 +232,7 @@ def play(global_inv):
        '\n     \___/')
     print('Hooray you found the key!! Head to the door to move on to the next room!')
 
-    while doorFound == False:
+    while doorFound == False: # Code runs until you find the door
         room1.update()
         x, y, valid = move(x,y)
         if x == 'no' and y == 'no' and valid == 'no':
