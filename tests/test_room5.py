@@ -15,7 +15,7 @@ class Test_Room5(unittest.TestCase):
         # test the atwood solving function
         # should fail when machine is partially empty
         Room5.atw_mcn.pick_item(self.wt[1])
-        Room5.solve_machine()
+        Room5.solve_machine([])
         self.assertEqual(Room5.win, False)
 
     def test_solve_atwood_wrong(self):
@@ -23,7 +23,7 @@ class Test_Room5(unittest.TestCase):
         Room5.atw_mcn.drop_item(0)
         for i in range(0, 5):
             Room5.atw_mcn.pick_item(self.wt[1])
-        Room5.solve_machine()
+        Room5.solve_machine([])
         self.assertEqual(Room5.win, False)
 
     def test_solve_atwood_right(self):
@@ -35,7 +35,7 @@ class Test_Room5(unittest.TestCase):
         Room5.atw_mcn.pick_item(self.wt[1])
         Room5.atw_mcn.pick_item(self.wt[1])
         Room5.atw_mcn.pick_item(self.wt[2])
-        Room5.solve_machine()
+        Room5.solve_machine([])
         self.assertEqual(Room5.win, True)
         Room5.win = False  # reset for further tests
 
