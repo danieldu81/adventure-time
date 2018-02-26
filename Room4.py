@@ -383,6 +383,7 @@ def play(global_inv):
 
     #user input prompt/commands
     global cmd
+    cmd = ''
     while cmd not in ['quit']:
         cmd = raw_input('room 4 => ').strip() #strip user input of whitespace
         try:

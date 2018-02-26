@@ -368,13 +368,13 @@ def play(global_inv):
     print "\nWelcome to room 3!\n"
     print "="*80
     print "You have entered the engine room."
-    print "In order to redirect the ship away from the incoming asteroid, you must enter the correct password"
-    print "into the computer and then change the current path of the engine."
+    print "In order to redirect the ship away from the incoming asteroid, you must enter the correct password into the computer and then change the current path of the engine."
     print "="*80
     print "\nYou can get help with the \'?\' command. Good luck!"
 
     #user input prompt/commands
     global cmd
+    cmd = ''
     while cmd not in ['quit']:
         cmd = raw_input('room 3 => ').strip() #strip user input of whitespace
         try:
