@@ -169,7 +169,7 @@ def wrap_inv_pick(args, h=False, f=None):
     if len(room_items.as_tuple()) < 1:
         err('no items to pick up')
         return
-    if len(inv.as_tuple()) + len(args) == inv.max_len:
+    if len(inv.as_tuple()) + len(args) > inv.max_len:
         err('not enough space in inventory')
         return
     if len(args) > 0:
