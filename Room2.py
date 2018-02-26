@@ -140,7 +140,7 @@ def passwords(h=False, f=None): # Function for the password directory
 
 def display(h=False, f=None): # Function for passwords file
   global passwordsGotten
-  passwords = ['ketchup', 'mustard', 'hotsauce', 'mayo', 'soysauce', 'hotsauce', 'barbequesauce', 'sourcream', 'relish', 'wasabi', 'vinegar', 'chutney', 'salsa', 'sriracha', 'bluecheese']
+  passwords = ['ketchup', 'mustard', 'hotsauce', 'mayonnaise', 'soysauce', 'hotsauce', 'barbequesauce', 'sourcream', 'relish', 'wasabi', 'vinegar', 'chutney', 'salsa', 'sriracha', 'bluecheese']
   random.shuffle(passwords)
   line = ''
   count = 1
