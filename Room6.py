@@ -189,7 +189,7 @@ def drop_item(args, helpmode=False, alias=None):
         print '  can be invoked with an argument list or interactively'
         print '  examples:'
         print '    %s apple pear  # drops the <apple> and <pear> items' % alias
-        print '    %s  # interactively drop items'
+        print '    %s  # interactively drop items' % alias
         return
     global inv
     global room_items
@@ -201,11 +201,12 @@ def drop_item(args, helpmode=False, alias=None):
         if i not in [item.name for item in inv.as_tuple()]:
             err('drop : item \''+i+'\' not found in user inventory')
         else:
-            index = [item.name for item in room_items.as_tuple()].index(i)
             try:
+                index = [item.name for item in inv.as_tuple()].index(i)
                 tmp = inv.drop_item(index)
                 assert tmp != inventory.NULL
                 assert room_items.pick_item(tmp) > 0
+                print 'successfully dropped item \''+i+'\''
             except:
                 err('inventory error : invalid item to drop')
     if len(args) > 0:
@@ -213,8 +214,8 @@ def drop_item(args, helpmode=False, alias=None):
             drop(i)
     else:
         try:
-            'Current state of user inventory:'
-            inv.show_inv()
+            print 'Current state of user inventory:'
+            inv.print_inv()
             index = int(raw_input('room 6 : drop at [inventory] index => '))
             assert index >= 0 and index < len(inv.as_tuple())
             drop(inv.as_tuple()[index].name)
